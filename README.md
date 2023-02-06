@@ -11,6 +11,11 @@ The app will have a household feature so that multiple people in the same househ
 
 The algorithm will assign tasks based on past task completion in order to optimize household workload. It may also assign tasks based on task preference of users.
 
+# Mockups
+![](mockups/task-view.png)
+![](mockups/calendar-view.png)
+![](mockups/create-a-task.png)
+
 ## Requirements
 * The app must allow the user to enter cleaning tasks and how often they would like it to get done.
 * Users are able to specify in their user profile their prefferred cleaning times/days of the week.
@@ -23,7 +28,6 @@ The algorithm will assign tasks based on past task completion in order to optimi
 * Users are able to move cleaning events from the calendar view.
 * Ability to have admin users for the household.
 * Ability for admin users to assign other users tasks (e.g. parent assigns child tasks)
-* 
 
 ## Views
 * Calendar View
