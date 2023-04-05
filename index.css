@@ -1,0 +1,36 @@
+:root {
+    --layout-cols: repeat(var(--ncols), min-content);
+    --layout-rows: repeat(var(--nrows), min-content);
+    --grid-size: 60vh;
+    --grid-cell-size: calc((var(--grid-size) / max(var(--ncols), var(--nrows))) - var(--grid-gap-size));
+    --grid-font-size: 5vmin;
+    --grid-gap-size: 5px;
+}
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+}
+#main {
+    height: 100vh;
+    width: 100vw;
+}
+
+
+
+#grid {  /* template -> (rows / columns) */
+    display: grid;
+    background-color: magenta;
+    grid-template: repeat(6, minmax(0, 1fr)) / repeat(7, minmax(0, 1fr));
+    gap: var(--grid-gap-size);
+    height: 100%;
+    width: 100%;
+}
+.cell {
+    display: flex;
+    background-color: aqua;
+    width: 100vw;
+    height: 100vh;
+}
