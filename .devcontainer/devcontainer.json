@@ -24,8 +24,8 @@
 			"extensions": [
 				"eamodio.gitlens",
 				"mblode.pretty-formatter",
-				"ms-vscode.live-server"
-				// "ritwickdey.LiveServer"
+				"xabikos.JavaScriptSnippets",
+				"ritwickdey.LiveServer"
 			]
 		}
 	}
