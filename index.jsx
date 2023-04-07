@@ -1,30 +1,80 @@
 
 
+
+const data = {
+    user: {
+        name: "Chase Kinard",
+        pfpref: "pfp/chase-kinard.png"
+    }
+};
+
+
+
 ReactDOM.render(
-    <CalendarGrid indices={ [...Array(7*6).keys()] } />,
-    document.getElementById('main')
+    <Base data={ data }></Base>,
+    document.getElementById("main")
 );
 
+
+
+/* Base */
+function Base(props) {
+    return <>
+        <Menu data={ props.data }></Menu>
+        <div id="container">
+            <CalendarGrid indices={ [...Array(7*6).keys()] } />
+        </div>
+    </>
+}
+
+
+
+/* Left Menu */
+function Menu(props) {
+    return <div id="menu">
+        <MenuUserHeader user={props.data.user}></MenuUserHeader>
+        <hr></hr>
+        <MenuButton text="All Tasks"></MenuButton>
+        <hr></hr>
+        <MenuButton text="Calendar"></MenuButton>
+        <hr></hr>
+        <MenuButton text="Create a Task"></MenuButton>
+        <hr></hr>
+        <MenuButton text="My Household"></MenuButton>
+        <hr></hr>
+        <MenuButton text="Admin Settings"></MenuButton>
+    </div>
+}
+
+function MenuUserHeader(props) {
+    return <div id="menu-header">
+        <img id="menu-user-image" src={ props.user.pfpref }></img>
+        <div id="menu-user-name">{ props.user.name }</div>
+    </div>
+}
+
+function MenuButton(props) {
+    return <div className="menu-button">
+        { props.text }
+    </div>
+}
+
+
+
+/* Calendar */
 function CalendarGrid(props) {
-    const layout = {
-        'display': 'grid',
-        'grid-template': 'repeat(6, min-content) / repeat(7, min-content)'
-    };
     const cells = props.indices.map( (i) =>
         <CalendarCell id={ i }></CalendarCell>
     );
-    return <div class='container grid' style={ layout }>
+    return <div id="grid">
         { cells }
     </div>
 }
 
 function CalendarCell(props) {
-    const layout = {
-        'display': 'flex',
-        'background-color': 'cyan',
-        'border': '2px solid black'
-    };
-    return <div id={ `cell-${ props.id }` } style={ layout }>
+    return <div id={ `cell-${ props.id }` } class="cell">
         { props.id }
     </div>
 }
+
+

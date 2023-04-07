@@ -1,0 +1,89 @@
+
+
+
+:root {
+
+    /* Colors */
+    --color-WetPaper: #F0F0F0;
+    --color-RomanSilver: #84828F;
+    --color-OldLavendar: #6A687A;
+    --color-BlackCoral: #536271;
+    --color-Charcoal: #3E4C5E;
+    --color-PrussianBlue: #2C3D55;
+}
+
+
+
+/* Base */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Comfortaa';
+}
+#main {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+
+
+/* Menu */
+#menu {
+    flex: 1;
+    padding: 5px;
+    background-color: var(--color-RomanSilver);
+    border-style: outset;
+}
+
+/* Menu Header */
+#menu #menu-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#menu #menu-user-image {
+    width: 25%;
+    border-radius: 50%;
+    box-shadow: 2.5px 2.5px 5px var(--color-OldLavendar);
+}
+#menu #menu-user-name {
+    margin: 5px;
+}
+
+/* Menu Buttons */
+#menu hr {
+    margin: 5px;
+}
+#menu .menu-button {
+    margin: 5px;
+}
+#menu .menu-button:last-child {
+    position: absolute;
+    bottom: 0;
+}
+
+
+
+/* Calendar */
+#container {
+    display: flex;
+    flex: 5;
+    /* height: 100%; */
+    background-color: magenta;
+}
+#container #grid {  /* template -> (rows / columns) */
+    display: grid;
+    padding: 5px;
+    background-color: var(--color-PrussianBlue);
+    grid-template: repeat(6, minmax(0, 1fr)) / repeat(7, minmax(0, 1fr));
+    gap: 5px;
+    width: 100%;
+}
+#container #grid .cell {
+    display: flex;
+    padding: 5px;
+    background-color: var(--color-WetPaper);
+    box-shadow: inset 2.5px 2.5px 5px var(--color-OldLavendar);
+}

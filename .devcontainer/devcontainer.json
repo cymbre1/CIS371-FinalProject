@@ -24,6 +24,7 @@
 			"extensions": [
 				"eamodio.gitlens",
 				"mblode.pretty-formatter",
+				"xabikos.JavaScriptSnippets",
 				"ritwickdey.LiveServer"
 			]
 		}
