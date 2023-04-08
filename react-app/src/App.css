@@ -106,8 +106,6 @@
   bottom: 0;
 }
 
-
-
 /* Calendar */
 #container {
   display: flex;
@@ -128,4 +126,77 @@
   padding: 5px;
   background-color: var(--color-WetPaper);
   box-shadow: inset 2.5px 2.5px 5px var(--color-OldLavendar);
+}
+
+.tasks {
+  width: 75%;
+  background-color: var(--color-PrussianBlue);
+}
+
+.task {
+  font-size: 30px;
+  color: var(--color-WetPaper);
+  background-color: var(--color-OldLavendar);
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;;
+  /* text-align: center; */
+}
+
+.title {
+  font-size: 25px;
+  color: var(--color-WetPaper);
+  padding: 10px;
+  /* padding: 5px; */
+}
+
+.taskText {
+  padding: 5px;
+  /* margin-left: 50%; */
+  /* display: inline-block; */
+}
+
+#task-user-image {
+  width: 40px;
+  padding: 5px;
+  border-radius: 50%;
+  box-shadow: 2.5px 2.5px 5px var(--color-OldLavendar);
+}
+
+#top-bar {
+  display: flex;
+}
+
+.task-info {
+  width: 300px;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 5px;
+  font-size: 20px;
+  text-align: left
+}
+
+.assignee-info {
+  font-size: 20px;
+  padding-left: 10px;
+  text-align: center;
+}
+
+.created-by-info {
+  display: flex;
+  justify-content: right;
+}
+
+.task-operations {
+  display: inline-block;
+  text-align: right;
+  font-size: 20px;
+  width: 35%;
+  padding: 5px;
+}
+
+.crud-button {
+  width: 50px;
+  height: 40px;
+  margin: 5px;
 }

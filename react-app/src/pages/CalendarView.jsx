@@ -28,6 +28,7 @@ function Menu(props) {
 }
 
 function MenuUserHeader(props) {
+    console.log(props)
     return <div id="menu-header">
         <img id="menu-user-image" src={props.user.pfpref}></img>
         <div id="menu-user-name">{props.user.name}</div>
