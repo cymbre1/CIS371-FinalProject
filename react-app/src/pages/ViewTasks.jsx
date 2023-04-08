@@ -1,7 +1,8 @@
 // import {Alert} from "react-bootstrap"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
+// import { faEdit } from "@fortawesome/free-solid-svg-icons";
+// import {} from 
 
 
 function TaskViewBase(props) {
@@ -46,8 +47,8 @@ function TaskList(props) {
         <Task task={i} users={props.data.users} />
     );
 
-    tasks.unshift(<div id="top-bar"><div class='title'>Tasks</div><button class="add-task-button">Add Task</button></div>)
-    tasks.unshift()
+    tasks.unshift(<div id="top-bar"><div class='title'>Tasks</div><button class="add-task-button"><FontAwesomeIcon icon={faPlus} size="xl" inverse/></button></div>)
+    // tasks.unshift()
 
     return <div className="tasks">{tasks}</div>
 }
@@ -55,25 +56,25 @@ function TaskList(props) {
 function Task(props) {
     return <div class="task">
             <div class="task-info" id="task-name">
-                <div class="title">{props.task.name}</div>
+                <div class="task-title">{props.task.name}</div>
                 <div class="assignee-info">
                     <img id="task-user-image" src={props.users[props.task.assignee - 1].pfpref}></img>
-                    <div>Assignee: {props.users[props.task.assignee - 1].name}</div>
+                    <div class="image-words">{props.users[props.task.assignee - 1].name}</div>
                 </div>
             </div>
-            <div class="task-info">
+            <div class="task-stats">
                 <div class="taskText">Duration: {props.task.duration}</div>
                 <div class="taskText">Frequency: {props.task.frequency}</div>
                 <div class="taskText">Time: {props.task.desiredTime}</div>
             </div>
             <div class="task-operations">
                 <div class="created-by-info">
-                    <div>Created By</div>
+                    <div class="image-words">Created By</div>
                     <img id="task-user-image" src={props.users[props.task.assigner - 1].pfpref}></img>
                 </div>
                 <div>
-                    <button class="crud-button"><FontAwesomeIcon icon={faTrash}/>  </button>
-                    <button class="crud-button"><FontAwesomeIcon icon={faEdit}/></button>
+                    <button class="crud-button"><FontAwesomeIcon icon={faTrash} size="xl" inverse/>  </button>
+                    <button class="crud-button"><FontAwesomeIcon icon={faEdit} size="xl" inverse/></button>
                 </div>
             </div>
         </div>
