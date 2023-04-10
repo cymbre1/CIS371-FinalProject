@@ -1,33 +1,14 @@
-
-
-
-const data = {
-    user: {
-        name: "Chase Kinard",
-        pfpref: "pfp/chase-kinard.png"
-    }
-};
-
-
-
-ReactDOM.render(
-    <Base data={ data }></Base>,
-    document.getElementById("main")
-);
-
-
+import React from "react";
 
 /* Base */
 function Base(props) {
     return <>
-        <Menu data={ props.data }></Menu>
+        <Menu data={props.data}></Menu>
         <div id="container">
-            <CalendarGrid indices={ [...Array(7*6).keys()] } />
+            <CalendarGrid indices={[...Array(7 * 6).keys()]} />
         </div>
     </>
 }
-
-
 
 /* Left Menu */
 function Menu(props) {
@@ -47,15 +28,16 @@ function Menu(props) {
 }
 
 function MenuUserHeader(props) {
+    console.log(props)
     return <div id="menu-header">
-        <img id="menu-user-image" src={ props.user.pfpref }></img>
-        <div id="menu-user-name">{ props.user.name }</div>
+        <img id="menu-user-image" src={props.user.pfpref}></img>
+        <div id="menu-user-name">{props.user.name}</div>
     </div>
 }
 
 function MenuButton(props) {
     return <div className="menu-button">
-        { props.text }
+        {props.text}
     </div>
 }
 
@@ -63,18 +45,23 @@ function MenuButton(props) {
 
 /* Calendar */
 function CalendarGrid(props) {
-    const cells = props.indices.map( (i) =>
-        <CalendarCell id={ i }></CalendarCell>
+    const cells = props.indices.map((i) =>
+        <CalendarCell id={i}></CalendarCell>
     );
     return <div id="grid">
-        { cells }
+        {cells}
     </div>
 }
 
 function CalendarCell(props) {
-    return <div id={ `cell-${ props.id }` } class="cell">
-        { props.id }
+    return <div id={`cell-${props.id}`} class="cell">
+        {props.id}
     </div>
+}
+
+export {
+    CalendarGrid,
+    Base
 }
 
 
