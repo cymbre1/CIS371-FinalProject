@@ -1,13 +1,35 @@
 import React from "react";
+import FullCalendar from '@fullcalendar/react' // must go before plugins
+import dayGridPlugin from '@fullcalendar/daygrid'
+import interactionPlugin from '@fullcalendar/interaction';
+import { useState } from "react";
 
 /* Base */
 function Base(props) {
+    const [events, setEvents] = useState(props.data.tasks.map((task, index) => ({
+        title: task.name, date: `2023-04-0${index}`
+    })));
+    // var tasks  = [];
+
+    // for(var task in props.data.tasks) {
+    //     events.push({title: props.data.tasks[task].name, date: `2023-04-0${task}`});
+    // }
+
     return <>
         <Menu data={props.data}></Menu>
-        <div id="container">
-            <CalendarGrid indices={[...Array(7 * 6).keys()]} />
-        </div>
-    </>
+        <FullCalendar
+        editable="true"
+        plugins={[ dayGridPlugin, interactionPlugin ]}
+        dateClick={(arg) => {
+            setEvents([...events, { title: `Busy`, date: arg.dateStr }])
+        }}
+        events={events}
+        selectable="true"
+        droppable={"true"}
+        eventDrop={info => {
+            console.log("Do something here to set the data of the task")
+        }}   
+         /> </>
 }
 
 /* Left Menu */
@@ -28,7 +50,6 @@ function Menu(props) {
 }
 
 function MenuUserHeader(props) {
-    console.log(props)
     return <div id="menu-header">
         <img id="menu-user-image" src={props.user.pfpref}></img>
         <div id="menu-user-name">{props.user.name}</div>
