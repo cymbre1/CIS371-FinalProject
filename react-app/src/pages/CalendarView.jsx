@@ -21,7 +21,26 @@ function Base(props) {
         editable="true"
         plugins={[ dayGridPlugin, interactionPlugin ]}
         dateClick={(arg) => {
-            setEvents([...events, { title: `Busy`, date: arg.dateStr }])
+            console.log(arg)
+            var hasEvent = false;
+            var newEvents = []
+            events.forEach((element) => {
+                console.log(`${element.date} and ${arg.dateStr}`)
+                if(element.date === arg.dateStr && element.title === `Busy`) {
+                    console.log("EQUAL")
+                    hasEvent = true;
+                } else if(element.date === arg.dateStr && element.title !== `Busy`){ 
+                    hasEvent = true;
+                    newEvents.push(element);
+                } else {
+                    newEvents.push(element);
+                }
+            });
+            if(!hasEvent) {
+                setEvents([...events, { title: `Busy`, date: arg.dateStr }]);
+            } else {
+                setEvents(newEvents);
+            }
         }}
         events={events}
         selectable="true"
