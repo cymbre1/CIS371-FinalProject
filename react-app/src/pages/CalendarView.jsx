@@ -25,9 +25,7 @@ function Base(props) {
             var hasEvent = false;
             var newEvents = []
             events.forEach((element) => {
-                console.log(`${element.date} and ${arg.dateStr}`)
                 if(element.date === arg.dateStr && element.title === `Busy`) {
-                    console.log("EQUAL")
                     hasEvent = true;
                 } else if(element.date === arg.dateStr && element.title !== `Busy`){ 
                     hasEvent = true;
@@ -45,9 +43,12 @@ function Base(props) {
         events={events}
         selectable="true"
         droppable={"true"}
-        eventDrop={info => {
+        eventDrop={(date) => {
+            console.log(date.event)
+            // info.event.setDates
             console.log("Do something here to set the data of the task")
         }}   
+        // eventChange={(blah) => {console.log(blah.event)}}
          /> </>
 }
 

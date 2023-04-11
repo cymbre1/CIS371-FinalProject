@@ -1,9 +1,7 @@
-// import {Alert} from "react-bootstrap"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
-// import { faEdit } from "@fortawesome/free-solid-svg-icons";
-// import {} from 
-
+import React from 'react'
+import {CreateTaskModal} from './CreateTask'
 
 function TaskViewBase(props) {
     return <>
@@ -42,13 +40,18 @@ function MenuButton(props) {
 }
 
 function TaskList(props) {
+    const [showModal, setShowModal] = React.useState();
+    var addTaskButton = () => {
+        setShowModal(!showModal);
+        console.log()
+    }
 
     const tasks = props.data.tasks.map((i, index) =>
         <Task task={i} users={props.data.users} />
     );
 
-    tasks.unshift(<div id="top-bar"><div class='title'>Tasks</div><button class="add-task-button"><FontAwesomeIcon icon={faPlus} size="xl" inverse/></button></div>)
-    // tasks.unshift()
+    tasks.unshift(<div id="top-bar"><div class='title'>Tasks</div><button class="add-task-button" onClick={addTaskButton}><FontAwesomeIcon icon={faPlus} size="xl" inverse/></button></div>)
+    tasks.unshift(<CreateTaskModal showModal={showModal} setShowModal={setShowModal}/>)
 
     return <div className="tasks">{tasks}</div>
 }
