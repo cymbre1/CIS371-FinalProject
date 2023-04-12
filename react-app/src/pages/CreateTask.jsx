@@ -109,7 +109,6 @@ export const CreateTaskModal = ({ showModal, setShowModal }) => {
             <Background onClick={closeModal} ref={modalRef}>
               <animated.div style={animation}>
                 <ModalWrapper showModal={showModal}>
-                  {/* <ModalImg src={require('./modal.jpg')} alt='camera' /> */}
                   <ModalContent>
                     <h1>Create a Task</h1>
                     <div>

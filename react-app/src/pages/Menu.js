@@ -12,14 +12,20 @@ function Menu(props) {
         navigate("/taskView");
     }
     
+
+    const createTaskModal = () => {
+        console.log("Hello");
+        props.setShowModal(true);
+    }
+
     return <div id="menu">
         <MenuUserHeader user={props.data.user}></MenuUserHeader>
         <hr></hr>
-        <MenuButton text="All Tasks" blah={tasks}></MenuButton>
+        <MenuButton text="All Tasks" click={tasks}></MenuButton>
         <hr></hr>
-        <MenuButton text="Calendar" onClick={calendar} blah={calendar}></MenuButton>
+        <MenuButton text="Calendar" click={calendar}></MenuButton>
         <hr></hr>
-        <MenuButton text="Create a Task"></MenuButton>
+        <MenuButton text="Create a Task" click={createTaskModal}></MenuButton>
         <hr></hr>
         <MenuButton text="My Household"></MenuButton>
         <hr></hr>
@@ -36,7 +42,7 @@ function MenuUserHeader(props) {
 
 function MenuButton(props) {
     return (
-    <button className='menu-button' onClick={props.blah}>
+    <button className='menu-button' onClick={props.click}>
         {props.text}
     </button>
     )
