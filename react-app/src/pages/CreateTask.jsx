@@ -1,36 +1,37 @@
+// Code taken and modified from https://reactjsguru.com/how-to-make-popup-modal-in-react/
+
 import React, { useRef, useEffect, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
 
 const Background = styled.div`
-  width: 100%;
-  height: 100%;
   background: rgba(0, 0, 0, 0.8);
-  position: fixed;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 `;
 
 const ModalWrapper = styled.div`
   width: 100%;
-  right: 50%;
+  box-sizing: border-box;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
-  background: #fff;
-  color: #000;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  background: var(--color-BlackCoral);
+  color: var(--color-WetPaper);
   position: relative;
   z-index: 10;
   border-radius: 10px;
-`;
-
-const ModalImg = styled.img`
-  width: 100%;
-  height: 100%;
-  border-radius: 10px 0 0 10px;
-  background: #000;
+  padding: 30px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  max-width: max-content;
 `;
 
 const ModalContent = styled.div`
@@ -39,7 +40,6 @@ const ModalContent = styled.div`
   justify-content: center;
   align-items: center;
   line-height: 1.8;
-  color: #141414;
 
   p {
     margin-bottom: 1rem;
@@ -47,9 +47,10 @@ const ModalContent = styled.div`
 
   button {
     padding: 10px 24px;
-    background: #141414;
+    margin: 5px;
+    background: var(--color-PrussianBlue);
     color: #fff;
-    border: none;
+    border: solid 1px white;
   }
 `;
 
@@ -72,7 +73,10 @@ export const CreateTaskModal = ({ showModal, setShowModal }) => {
         duration: 250
       },
       opacity: showModal ? 1 : 0,
-      transform: showModal ? `translateY(0%)` : `translateY(-100%)`
+      transform: showModal ? `translateY(0%)` : `translateY(-100%)`,
+      position: 'fixed',
+      left: 0,
+      right: 0
     });
   
     const closeModal = e => {
@@ -131,8 +135,8 @@ export const CreateTaskModal = ({ showModal, setShowModal }) => {
                         </select>
                     </div>
                     <div>
-                        <button>Cancel</button>
-                        <button>Create Task</button>
+                        <button  id="cancel" onClick={() => setShowModal(prev => !prev)}>Cancel</button>
+                        <button id="create" >Create Task</button>
                     </div>
                   </ModalContent>
                   <CloseModalButton
@@ -146,11 +150,3 @@ export const CreateTaskModal = ({ showModal, setShowModal }) => {
         </>
       );
     };
-
-// function CreateTaskModal() {
-
-// }
-
-// export {
-//     CreateTaskModal
-// }
