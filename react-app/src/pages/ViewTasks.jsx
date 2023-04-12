@@ -1,21 +1,18 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
 import React from 'react'
-import {CreateTaskModal} from './CreateTask'
 
 function TaskViewBase(props) {
-    const [showModal, setShowModal] = React.useState();
 
     return <>
-        <TaskList showModal={showModal} setShowModal={setShowModal} id="tasklist" data={props.data}></TaskList>
-        <CreateTaskModal showModal={showModal} setShowModal={setShowModal}/>
+        <TaskList showModal={props.showModal} setShowModal={props.setShowModal} id="tasklist" data={props.data}></TaskList>
     </>
 }
 
 function TaskList(props) {
     var addTaskButton = () => {
+        console.log(props.setShowModal)
         props.setShowModal(!props.showModal);
-        console.log()
     }
 
     const tasks = props.data.tasks.map((i, index) =>

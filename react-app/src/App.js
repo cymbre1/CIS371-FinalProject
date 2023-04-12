@@ -7,16 +7,20 @@ import {Menu} from './pages/Menu';
 import {Login} from './pages/LoginView';
 import {CreateAcct} from './pages/CreateAccountView';
 import styled from 'styled-components';
+import React from 'react';
+import { CreateTaskModal } from './pages/CreateTask';
 
 function App(props) {
+  const [showModal, setShowModal] = React.useState();
+
   return (
     <BrowserRouter>
     <Routes>
       <Route path="/login" element={<Login></Login>}></Route>
       <Route path='/createAccount' element={<CreateAcct></CreateAcct>}></Route>
-      <Route path="/" element={<PageLayout data={props.data}/>}>
+      <Route path="/" element={<PageLayout data={props.data} showModal={showModal} setShowModal={setShowModal}/>}>
         <Route path="calendar" element={<Base data={ props.data } />}></Route>
-        <Route path="taskView" element={<TaskViewBase data={props.data} />}></Route>
+        <Route path="taskView" element={<TaskViewBase data={props.data} showModal={showModal} setShowModal={setShowModal} />}></Route>
       </Route> 
     </Routes>
     </BrowserRouter>
@@ -32,7 +36,8 @@ function PageLayout(props) {
   return (
     <>
     <LayoutContainer>
-        <Menu data={props.data}></Menu><Outlet />
+        <CreateTaskModal showModal={props.showModal} setShowModal={props.setShowModal}/>
+        <Menu data={props.data} showModal={props.showModal} setShowModal={props.setShowModal}></Menu><Outlet />
     </LayoutContainer>
     </>
   )
