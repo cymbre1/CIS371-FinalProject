@@ -16,7 +16,6 @@ function Base(props) {
     // }
 
     return <>
-        <Menu data={props.data}></Menu>
         <FullCalendar
         editable="true"
         plugins={[ dayGridPlugin, interactionPlugin ]}
