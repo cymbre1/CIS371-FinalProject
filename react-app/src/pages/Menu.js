@@ -1,12 +1,23 @@
 import React from 'react';
+import {useNavigate} from 'react-router-dom'
 
 function Menu(props) {
+    const navigate = useNavigate();
+    
+    const calendar = () => {
+        navigate("/calendar");
+    }
+
+    const tasks = () => {
+        navigate("/taskView");
+    }
+    
     return <div id="menu">
         <MenuUserHeader user={props.data.user}></MenuUserHeader>
         <hr></hr>
-        <MenuButton text="All Tasks"></MenuButton>
+        <MenuButton text="All Tasks" blah={tasks}></MenuButton>
         <hr></hr>
-        <MenuButton text="Calendar"></MenuButton>
+        <MenuButton text="Calendar" onClick={calendar} blah={calendar}></MenuButton>
         <hr></hr>
         <MenuButton text="Create a Task"></MenuButton>
         <hr></hr>
@@ -24,9 +35,11 @@ function MenuUserHeader(props) {
 }
 
 function MenuButton(props) {
-    return <div className="menu-button">
+    return (
+    <button className='menu-button' onClick={props.blah}>
         {props.text}
-    </div>
+    </button>
+    )
 }
 
 export {

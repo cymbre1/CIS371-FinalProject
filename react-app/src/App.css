@@ -98,6 +98,7 @@
 
 /* Menu */
 #menu {
+  color: var(--color-WetPaper);
   flex: 1;
   padding: 5px;
   background-color: var(--color-RomanSilver);
@@ -125,6 +126,11 @@
   margin: 5px;
 }
 #menu .menu-button {
+  color: var(--color-WetPaper);
+  border: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0px;
   margin: 5px;
 }
 #menu .menu-button:last-child {
