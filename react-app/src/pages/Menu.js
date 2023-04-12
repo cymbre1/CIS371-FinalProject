@@ -1,5 +1,5 @@
 import React from 'react';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 function Menu(props) {
     const navigate = useNavigate();
@@ -14,36 +14,38 @@ function Menu(props) {
     
 
     const createTaskModal = () => {
-        console.log("Hello");
-        props.setShowModal(true);
+        props.modals.createTaskModal.update(true);
+    }
+    const settingsModal = () => {
+        props.modals.settingsModal.update(true);
     }
 
     return <div id="menu">
-        <MenuUserHeader user={props.data.user}></MenuUserHeader>
+        <MenuUserHeader user={ props.data.user }></MenuUserHeader>
+        <MenuButton text="⚙" click={ settingsModal }></MenuButton>
         <hr></hr>
-        <MenuButton text="All Tasks" click={tasks}></MenuButton>
+        <MenuButton text="All Tasks" click={ tasks }></MenuButton>
         <hr></hr>
-        <MenuButton text="Calendar" click={calendar}></MenuButton>
+        <MenuButton text="Calendar" click={ calendar }></MenuButton>
         <hr></hr>
-        <MenuButton text="Create a Task" click={createTaskModal}></MenuButton>
+        <MenuButton text="Create a Task" click={ createTaskModal }></MenuButton>
         <hr></hr>
         <MenuButton text="My Household"></MenuButton>
         <hr></hr>
-        <MenuButton text="Admin Settings"></MenuButton>
     </div>
 }
 
 function MenuUserHeader(props) {
     return <div id="menu-header">
-        <img id="menu-user-image" src={props.user.pfpref} alt=""></img>
-        <div id="menu-user-name">{props.user.name}</div>
+        <img id="menu-user-image" src={ props.user.pfpref } alt=""></img>
+        <div id="menu-user-name">{ props.user.name }</div>
     </div>
 }
 
 function MenuButton(props) {
     return (
-    <button className='menu-button' onClick={props.click}>
-        {props.text}
+    <button className='menu-button' onClick={ props.click }>
+        { props.text }
     </button>
     )
 }
