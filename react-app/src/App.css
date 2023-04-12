@@ -63,6 +63,7 @@
   font-family: 'Comfortaa';
 }
 #root {
+  background-color: var(--color-BlackCoral);
   display: flex;
   height: 100vh;
   width: 100vw;
