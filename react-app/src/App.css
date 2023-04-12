@@ -91,6 +91,10 @@
   margin: 5px;
 }
 
+.fc .fc-button-primary:disabled {
+  opacity: 0;
+}
+
 .fc-event-title-container {
   background-color: var(--color-Charcoal);
 }
