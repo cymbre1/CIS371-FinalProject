@@ -16,13 +16,9 @@ function Menu(props) {
     const createTaskModal = () => {
         props.modals.createTaskModal.update(true);
     }
-    const settingsModal = () => {
-        props.modals.settingsModal.update(true);
-    }
 
     return <div id="menu">
-        <MenuUserHeader user={ props.data.user }></MenuUserHeader>
-        <MenuButton text="⚙" click={ settingsModal }></MenuButton>
+        <MenuUserHeader user={ props.data.user } settingsModal={ props.modals.settingsModal }></MenuUserHeader>
         <hr></hr>
         <MenuButton text="All Tasks" click={ tasks }></MenuButton>
         <hr></hr>
@@ -36,15 +32,27 @@ function Menu(props) {
 }
 
 function MenuUserHeader(props) {
+    const settingsModal = () => {
+        props.settingsModal.update(true);
+    }
     return <div id="menu-header">
         <img id="menu-user-image" src={ props.user.pfpref } alt=""></img>
-        <div id="menu-user-name">{ props.user.name }</div>
+        <div id="menu-user-name">{props.user.name}</div>
+        <MenuSettingsButton text="⚙" click={ settingsModal }></MenuSettingsButton>
     </div>
 }
 
 function MenuButton(props) {
     return (
-    <button className='menu-button' onClick={ props.click }>
+    <button className='menu-button' onClick={ props.click } >
+        { props.text }
+    </button>
+    )
+}
+
+function MenuSettingsButton(props) {
+    return (
+    <button id='menu-settings-button' className='menu-button' onClick={ props.click } >
         { props.text }
     </button>
     )
