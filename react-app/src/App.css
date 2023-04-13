@@ -1,40 +1,40 @@
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+    height: 40vmin;
+    pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 .App-link {
-  color: #61dafb;
+    color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 
@@ -44,232 +44,241 @@
 
 
 :root {
-
-  /* Colors */
-  --color-WetPaper: #F0F0F0;
-  --color-RomanSilver: #84828F;
-  --color-OldLavendar: #6A687A;
-  --color-BlackCoral: #536271;
-  --color-Charcoal: #3E4C5E;
-  --color-PrussianBlue: #2C3D55;
+    
+    /* Colors */
+    --color-WetPaper: #F0F0F0;
+    --color-RomanSilver: #84828F;
+    --color-OldLavendar: #6A687A;
+    --color-BlackCoral: #536271;
+    --color-Charcoal: #3E4C5E;
+    --color-PrussianBlue: #2C3D55;
 }
 
 
 
 /* Base */
 * {
-  margin: 0;
-  padding: 0;
-  font-family: 'Comfortaa';
+    margin: 0;
+    padding: 0;
+    font-family: 'Comfortaa';
 }
 #root {
-  background-color: var(--color-BlackCoral);
-  display: flex;
-  height: 100vh;
-  width: 100vw;
+    background-color: var(--color-PrussianBlue);
+    display: flex;
+    height: 100vh;
+    width: 100vw;
 }
 
 .fc {
-  width: 75%;
-  background-color: var(--color-PrussianBlue);
-  color: var(--color-WetPaper);
-  padding-left: 5px;
+    z-index: 0;
+    width: 75%;
+    background-color: var(--color-PrussianBlue);
+    color: var(--color-WetPaper);
+    padding-left: 5px;
 }
 
 .fc-daygrid-day-frame {
-  background-color: var(--color-WetPaper);
-  color: var(--color-PrussianBlue)
+    background-color: var(--color-WetPaper);
+    color: var(--color-PrussianBlue)
 }
 
 .fc-col-header-cell {
-  background-color: var(--color-OldLavendar);
-
+    background-color: var(--color-OldLavendar);
+    
 }
 
 .fc .fc-button-primary {
-  background-color: var(--color-OldLavendar);
-  margin: 5px;
+    background-color: var(--color-OldLavendar);
+    margin: 5px;
 }
 
 .fc .fc-button-primary:disabled {
-  opacity: 0;
+    opacity: 0;
 }
 
 .fc-event-title-container {
-  background-color: var(--color-Charcoal);
+    background-color: var(--color-Charcoal);
 }
 
 
 
 /* Menu */
 #menu {
-  color: var(--color-WetPaper);
-  flex: 1;
-  padding: 5px;
-  background-color: var(--color-RomanSilver);
-  border-style: outset;
+    color: var(--color-WetPaper);
+    flex: 1;
+    padding: 1em;
+    background-color: var(--color-RomanSilver);
 }
 
 /* Menu Header */
 #menu #menu-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em 0;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
 }
 #menu #menu-user-image {
-  width: 25%;
-  border-radius: 50%;
-  box-shadow: 2.5px 2.5px 5px var(--color-OldLavendar);
+    width: 25%;
+    border-radius: 50%;
+    box-shadow: 2.5px 2.5px 5px var(--color-OldLavendar);
 }
 #menu #menu-user-name {
-  margin: 5px;
+    margin-top: 0.5em;
 }
 
 /* Menu Buttons */
 #menu hr {
-  margin: 5px;
+    margin: 5px;
 }
 #menu .menu-button {
-  color: var(--color-WetPaper);
-  border: 0;
-  background: none;
-  box-shadow: none;
-  border-radius: 0px;
-  margin: 5px;
-  font-size: 18px;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    color: var(--color-WetPaper);
+    border: 0;
+    background: none;
+    box-shadow: none;
+    border-radius: 0px;
+    margin: 5px;
+    font-size: 18px;
 }
-#menu .menu-button:last-child {
-  position: absolute;
-  bottom: 0;
+#menu .menu-button:hover {
+    filter: brightness(85%);
+}
+#menu .menu-button:active {
+    filter: brightness(70%);
+}
+#menu #menu-settings-button {
+    text-align: center;
 }
 
 /* Calendar */
 #container {
-  display: flex;
-  flex: 5;
-  /* height: 100%; */
-  background-color: magenta;
+    display: flex;
+    flex: 5;
+    /* height: 100%; */
+    background-color: magenta;
 }
 #container #grid {  /* template -> (rows / columns) */
-  display: grid;
-  padding: 5px;
-  background-color: var(--color-PrussianBlue);
-  grid-template: repeat(6, minmax(0, 1fr)) / repeat(7, minmax(0, 1fr));
-  gap: 5px;
-  width: 100%;
+    display: grid;
+    padding: 5px;
+    background-color: var(--color-PrussianBlue);
+    grid-template: repeat(6, minmax(0, 1fr)) / repeat(7, minmax(0, 1fr));
+    gap: 5px;
+    width: 100%;
 }
 #container #grid .cell {
-  display: flex;
-  padding: 5px;
-  background-color: var(--color-WetPaper);
-  box-shadow: inset 2.5px 2.5px 5px var(--color-OldLavendar);
+    display: flex;
+    padding: 5px;
+    background-color: var(--color-WetPaper);
+    box-shadow: inset 2.5px 2.5px 5px var(--color-OldLavendar);
 }
 
 .tasks {
-  width: 75%;
-  background-color: var(--color-PrussianBlue);
+    width: 75%;
+    background-color: var(--color-PrussianBlue);
 }
 
 .task {
-  font-size: 30px;
-  color: var(--color-WetPaper);
-  background-color: var(--color-OldLavendar);
-  padding: 5px;
-  margin: 5px;
-  border-radius: 5px;;
-  /* justify-content: space-evenly; */
-  /* text-align: center; */
+    font-size: 30px;
+    color: var(--color-WetPaper);
+    background-color: var(--color-OldLavendar);
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;;
+    /* justify-content: space-evenly; */
+    /* text-align: center; */
 }
 
 .title {
-  font-size: 45px;
-  color: var(--color-WetPaper);
-  padding: 10px;
-  /* padding: 5px; */
+    font-size: 45px;
+    color: var(--color-WetPaper);
+    padding: 10px;
+    /* padding: 5px; */
 }
 
 .task-title {
-  font-size: 25px;
-  color: var(--color-WetPaper);
-  padding: 10px;
+    font-size: 25px;
+    color: var(--color-WetPaper);
+    padding: 10px;
 }
 
 .taskText {
-  padding: 5px;
-  justify-content: space-between;
-  /* margin-left: 50%; */
-  /* display: inline-block; */
+    padding: 5px;
+    justify-content: space-between;
+    /* margin-left: 50%; */
+    /* display: inline-block; */
 }
 
 #task-user-image {
-  width: 40px;
-  padding: 5px;
-  border-radius: 50%;
-  box-shadow: 2.5px 2.5px 5px var(--color-OldLavendar);
-  display: inline-block;
+    width: 40px;
+    padding: 5px;
+    border-radius: 50%;
+    box-shadow: 2.5px 2.5px 5px var(--color-OldLavendar);
+    display: inline-block;
 }
 
 .image-words {
-  display: inline-block;
-  padding-top: 15px;
-  /* justify-content: center; */
+    display: inline-block;
+    padding-top: 15px;
+    /* justify-content: center; */
 }
 
 #top-bar {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 .task-info {
-  /* width: 300px; */
-  display: inline-block;
-  vertical-align: middle;
-  padding: 5px;
-  font-size: 20px;
-  text-align: left
+    /* width: 300px; */
+    display: inline-block;
+    vertical-align: middle;
+    padding: 5px;
+    font-size: 20px;
+    text-align: left
 }
 
 .task-stats {
-  /* width: 300px; */
-  display: inline-block;
-  vertical-align: middle;
-  padding-left: 10%;
-  font-size: 20px;
-  text-align: left
+    /* width: 300px; */
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 10%;
+    font-size: 20px;
+    text-align: left
 }
 
 .assignee-info {
-  font-size: 20px;
-  padding-left: 5px;
-  display: flex;
+    font-size: 20px;
+    padding-left: 5px;
+    display: flex;
 }
 
 .created-by-info {
-  display: flex;
-  justify-content: right;
+    display: flex;
+    justify-content: right;
 }
 
 .task-operations {
-  display: inline-block;
-  text-align: right;
-  font-size: 20px;
-  /* width: 50%; */
-  position: absolute;
-  right: 0;
-  padding-right: 20px;
+    display: inline-block;
+    text-align: right;
+    font-size: 20px;
+    /* width: 50%; */
+    position: absolute;
+    right: 0;
+    padding-right: 20px;
 }
 
 .crud-button {
-  width: 40px;
-  height: 40px;
-  margin: 5px;
-  background-color: var(--color-Charcoal);
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    background-color: var(--color-Charcoal);
 }
 
 .add-task-button {
-  background-color: var(--color-RomanSilver);
-  margin: 10px;
-  padding: 10px;
+    background-color: var(--color-RomanSilver);
+    margin: 10px;
+    padding: 10px;
 }

@@ -1,5 +1,4 @@
 // Code taken and modified from https://reactjsguru.com/how-to-make-popup-modal-in-react/
-
 import React, { useRef, useEffect, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import styled from 'styled-components';
@@ -76,7 +75,7 @@ padding: 0;
 z-index: 10;
 `;
 
-export const CreateTaskModal = ({ showModal, setShowModal }) => {
+export const SettingsModal = ({ showModal, setShowModal }) => {
     const modalRef = useRef();
     
     /* Animate page open. */
@@ -110,46 +109,36 @@ export const CreateTaskModal = ({ showModal, setShowModal }) => {
         },
         [keyPress]
     );
-
+            
     return (
         <>
             {showModal ? (
-                <Background onClick={closeModal} ref={modalRef}>
-                    <animated.div style={animation}>
-                        <ModalWrapper showModal={showModal}>
-                        <ModalContent>
-                            <h1>Create a Task</h1>
-                            <div>
-                                <label for="taskname">Task Name: </label>
-                                <input id="taskname" type="text"></input>
-                            </div>
-                            <div>
-                                <label for="frequency-number">Frequency: </label>
-                                <input id="frequency-number" type="number"></input>
-                                <label for="frequency-repeating"> per </label>
-                                <select id="frequency-repeating" type="number">
-                                    <option value="week">Week</option>
-                                    <option value="month">Month</option>
-                                    <option value="year">Year</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="estimated-time">Estimated Time: </label>
-                                <input id="estimated-time" type="number"></input>
-                                <select id="time-type" type="number">
-                                    <option value="minutes">Minutes</option>
-                                    <option value="hours">Hours</option>
-                                </select>
-                            </div>
-                            <div>
-                                <button  id="cancel" onClick={() => setShowModal(false)}>Cancel</button>
-                                <button id="create" >Create Task</button>
-                            </div>
-                        </ModalContent>
-                        <CloseModalButton
-                            aria-label='Close modal'
-                            onClick={() => setShowModal(false)}
-                        />
+                <Background onClick={ closeModal } ref={ modalRef }>
+                    <animated.div style={ animation }>
+                        <ModalWrapper showModal={ showModal }>
+                            <ModalContent>
+                                <h1>Update Profile</h1>
+                                <div>
+                                    <label for="name">Full Name: </label>
+                                    <input id="taskname" type="text"></input>
+                                </div>
+                                <div>
+                                    <label for="email">Email: </label>
+                                    <input id="email" type="text"></input>
+                                </div>
+                                <div>
+                                    <label for="pfp">Profile Image: </label>
+                                    <input id="pfp" type="file"></input>
+                                </div>
+                                <div>
+                                    <button  id="cancel" onClick={ () => setShowModal(false) }>Cancel</button>
+                                    <button id="update" >Update</button>
+                                </div>
+                            </ModalContent>
+                            <CloseModalButton
+                                aria-label='Close modal'
+                                onClick={ () => setShowModal(false) }
+                            />
                         </ModalWrapper>
                     </animated.div>
                 </Background>
