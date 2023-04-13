@@ -1,6 +1,6 @@
 const { query } = require('express')
 const express = require('express')
-const ColorDB = require('./ColorDB')
+const TaskDB = require('./TaskDB')
 
 const app = express()
 const port = 3001  // so we don't conflict with React on 3000
@@ -19,6 +19,7 @@ app.use(function (req, res, next) {
 });
 
 app.get('/viewTasks', async (req, res) => {
+    console.log("Hi")
     // Introduce an artificial delay so user can see the effects of loading.    
     let delay = 500;  // default is 500. Can be overridden by query string.
     if (req.query.hasOwnProperty('delay')) {
@@ -47,4 +48,4 @@ app.post('/viewTask', async (req, res) => {
 })
 
 /* Launch the server */
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Backend listening on port ${port}!`))
