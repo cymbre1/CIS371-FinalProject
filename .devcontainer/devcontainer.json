@@ -16,7 +16,8 @@
 	"forwardPorts": [3000, 5500],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "apt update",
+	"postCreateCommand": "apt update && cd react-app/ && npm install react-scripts",
+	"postAttachCommand": "cd react-app/",
 
 	// Configure tool-specific properties.
 	"customizations": {

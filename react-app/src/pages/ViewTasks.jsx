@@ -5,14 +5,13 @@ import React from 'react'
 function TaskViewBase(props) {
 
     return <>
-        <TaskList showModal={props.showModal} setShowModal={props.setShowModal} id="tasklist" data={props.data}></TaskList>
+        <TaskList showModal={props.createTaskModal.state} setShowModal={props.createTaskModal.update} id="tasklist" data={props.data}></TaskList>
     </>
 }
 
 function TaskList(props) {
     var addTaskButton = () => {
-        console.log(props.setShowModal)
-        props.setShowModal(!props.showModal);
+        props.setShowModal(true);
     }
 
     const tasks = props.data.tasks.map((i, index) =>
