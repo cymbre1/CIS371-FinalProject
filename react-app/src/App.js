@@ -35,16 +35,10 @@ function App() {
    ],
 
    tasks: []
- 
-   // tasks: [
-   //   { name: "Clean out the fridge", id: 1, assigner: 1, assignee: 2, duration: 60, frequency: "weekly", desiredTime: "7:00, Monday" },
-   //   { name: "Sweep the basement", id: 2, assigner: 2, assignee: 1, duration: 30, frequency: "biweekly", desiredTime: "any" },
-   //   { name: "Organize the garage", id: 3, assigner: 2, assignee: 1, duration: 30, frequency: "biweekly", desiredTime: "any" }
-   // ]
- });
+  });
 
 
-  let fetchUsers = () => {
+  let fetchTasks = () => {
     console.log("BLAHHH")
     fetch(`${apiUrl}/viewTasks?timeout=1000`).then(response => {
       console.log("HELLO")
@@ -59,7 +53,23 @@ function App() {
     });
   }
 
+  let fetchUsers = () => {
+    console.log("BLAHHH")
+    fetch(`${apiUrl}/getUsers?timeout=1000`).then(response => {
+      console.log("HELLO")
+      console.log(response)
+      return response.json();
+    }).then(data => {
+      console.log("And the JSON");
+      console.log(data);
+      setUserData(userData => ({ ...userData, users: data }))
+    }).catch (problem => {
+      console.log("OH NO")
+    });
+  }
+
   React.useEffect(fetchUsers, []);
+  React.useEffect(fetchTasks, []);
 
   console.log("AFTER")
 

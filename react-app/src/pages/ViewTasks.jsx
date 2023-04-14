@@ -26,14 +26,16 @@ function TaskList(props) {
 }
 
 function Task(props) {
+    console.log("Users")
+    console.log(props.task.assignedBy)
     console.log("Inside task")
     console.log(props.task)
     return <div class="task">
             <div class="task-info" id="task-name">
                 <div class="task-title">{props.task.name}</div>
-                <div class="assignee-info">
-                    {/* <img id="task-user-image" src={props.users[props.task.assignee - 1].pfpref} alt=""></img> */}
-                    {/* <div class="image-words">{props.users[props.task.assignee - 1].name}</div> */}
+                <div class="assignedBy-info">
+                    <img id="task-user-image" src={props.users[props.task.assignedBy - 1].pfpref} alt=""></img>
+                    <div class="image-words">{props.users[props.task.assignedBy - 1].name}</div>
                 </div>
             </div>
             <div class="task-stats">
@@ -44,7 +46,7 @@ function Task(props) {
             <div class="task-operations">
                 <div class="created-by-info">
                     <div class="image-words">Created By</div>
-                    {/* <img id="task-user-image" src={props.users[props.task.assigner - 1].pfpref} alt=""></img> */}
+                    <img id="task-user-image" src={props.users[props.task.assignedTo - 1].pfpref} alt=""></img>
                 </div>
                 <div>
                     <button class="crud-button"><FontAwesomeIcon icon={faTrash} size="xl" inverse/>  </button>

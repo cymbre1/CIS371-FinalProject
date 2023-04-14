@@ -15,9 +15,9 @@ class TaskDB {
             // this.db.run('INSERT INTO Bugs (title, description, type, priority, status) VALUES ("Add something", "I would like a new feature", "feature", "high", "open");')
             // this.db.run('INSERT INTO Bugs (title, description, type, priority, status) VALUES ("Fix a problem", "It does not work", "bug", "low", "open");')
 
-            this.db.run('CREATE TABLE Users (id INTEGER PRIMARY KEY, name TEXT NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL);');
-            this.db.run('INSERT INTO Users ( name, email, password) VALUES ("Cymbre Spoehr", "scottcym@mail.gvsu.edu", "password123");');
-            this.db.run('INSERT INTO Users ( name, email, password) VALUES ("Chase Kinard", "kinardc@mail.gvsu.edu", "testPassword!");');
+            this.db.run('CREATE TABLE Users (id INTEGER PRIMARY KEY, name TEXT NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL, pfpref TEXT NOT NULL);');
+            this.db.run('INSERT INTO Users ( name, email, password, pfpref) VALUES ("Cymbre Spoehr", "scottcym@mail.gvsu.edu", "password123", "pfp/cymbre-spoehr.jpg" );');
+            this.db.run('INSERT INTO Users ( name, email, password, pfpref) VALUES ("Chase Kinard", "kinardc@mail.gvsu.edu", "testPassword!", "pfp/chase-kinard.png");');
 
             this.db.run('CREATE TABLE Tasks (id INTEGER PRIMARY KEY, name TEXT NOT NULL, frequency TEXT NOT NULL, duration TEXT NOT NULL, scheduled TEXT NOT NULL, assignedBy INTEGER NOT NULL, assignedTo INTEGER);');
             this.db.run('INSERT INTO Tasks (name, frequency, duration, scheduled, assignedBy, assignedTo) VALUES ("Clean out the fridge", "weekly", "60 minutes", "7:00, Monday", "1", "2");');

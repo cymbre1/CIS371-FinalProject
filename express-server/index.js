@@ -28,6 +28,16 @@ app.get('/viewTasks', async (req, res) => {
     setTimeout(async () => res.json(await TaskDB.allTasks()), delay)
 })
 
+app.get('/getUsers', async (req, res) => {
+    // Introduce an artificial delay so user can see the effects of loading.    
+    let delay = 500;  // default is 500. Can be overridden by query string.
+    if (req.query.hasOwnProperty('delay')) {
+        delay = req.query.delay;
+        console.log("Using a delay of =>" + delay + "<=");
+    }
+    setTimeout(async () => res.json(await TaskDB.allUsers()), delay)
+})
+
 app.post('/viewTask', async (req, res) => {
     console.log("About to create a new task");
 

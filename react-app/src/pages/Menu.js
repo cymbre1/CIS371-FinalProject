@@ -36,8 +36,8 @@ function MenuUserHeader(props) {
         props.settingsModal.update(true);
     }
     return <div id="menu-header">
-        {/* <img id="menu-user-image" src={ props.user.pfpref } alt=""></img> */}
-        {/* <div id="menu-user-name">{props.user.name}</div> */}
+        <img id="menu-user-image" src={ props.user.pfpref } alt=""></img>
+        <div id="menu-user-name">{props.user.name}</div>
         <MenuSettingsButton text="⚙" click={ settingsModal }></MenuSettingsButton>
     </div>
 }
