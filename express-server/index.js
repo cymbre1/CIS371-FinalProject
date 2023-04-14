@@ -19,7 +19,6 @@ app.use(function (req, res, next) {
 });
 
 app.get('/viewTasks', async (req, res) => {
-    console.log("Hi")
     // Introduce an artificial delay so user can see the effects of loading.    
     let delay = 500;  // default is 500. Can be overridden by query string.
     if (req.query.hasOwnProperty('delay')) {
@@ -45,6 +44,11 @@ app.post('/viewTask', async (req, res) => {
             res.json(data);
         })
     }
+})
+
+app.get('/init', (req, res) => {
+    require('./TaskDB').initialize()
+    res.send('Initialized.')
 })
 
 /* Launch the server */

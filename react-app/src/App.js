@@ -47,6 +47,7 @@ function App() {
     fetch(`${apiUrl}/viewTasks?timeout=1000`).then(response => {
       console.log("HELLO")
       console.log(response)
+      return response.json();
     }).then(data => {
       console.log("And the JSON");
       console.log(data);
@@ -61,12 +62,15 @@ function App() {
       // setColors(data)
       // setLoading(false)
     }).catch (problem => {
+      console.log("OH NO")
       // setLoading(false)
       // setMessage("Unable to load colors from the server.")
     });
   }
 
-  // console.log("AFTER")
+  fetchUsers();
+
+  console.log("AFTER")
 
   const modal = function (state, update) { return { state: state, update: update }; };
   const modals = {
