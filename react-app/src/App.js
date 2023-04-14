@@ -14,33 +14,35 @@ import { SettingsModal } from './pages/SettingsModal';
 const apiUrl = 'http://localhost:3001'
 
 function App() {
+  const [userData, setUserData] = React.useState({
+    user: {
+     id: 1,
+     name: "Chase Kinard",
+     pfpref: "pfp/chase-kinard.png"
+   },
+   
+   users: [
+     {
+       id: 1,
+       name: "Chase Kinard",
+       pfpref: "pfp/chase-kinard.png"
+     },
+     {
+       id: 2,
+       name: "Cymbre Spoehr",
+       pfpref: "pfp/cymbre-spoehr.jpg"
+     }
+   ],
 
-  const userData = {
-     user: {
-      id: 1,
-      name: "Chase Kinard",
-      pfpref: "pfp/chase-kinard.png"
-    },
-    
-    users: [
-      {
-        id: 1,
-        name: "Chase Kinard",
-        pfpref: "pfp/chase-kinard.png"
-      },
-      {
-        id: 2,
-        name: "Cymbre Spoehr",
-        pfpref: "pfp/cymbre-spoehr.jpg"
-      }
-    ],
-  
-    tasks: [
-      { name: "Clean out the fridge", id: 1, assigner: 1, assignee: 2, duration: 60, frequency: "weekly", desiredTime: "7:00, Monday" },
-      { name: "Sweep the basement", id: 2, assigner: 2, assignee: 1, duration: 30, frequency: "biweekly", desiredTime: "any" },
-      { name: "Organize the garage", id: 3, assigner: 2, assignee: 1, duration: 30, frequency: "biweekly", desiredTime: "any" }
-    ]
-  };
+   tasks: []
+ 
+   // tasks: [
+   //   { name: "Clean out the fridge", id: 1, assigner: 1, assignee: 2, duration: 60, frequency: "weekly", desiredTime: "7:00, Monday" },
+   //   { name: "Sweep the basement", id: 2, assigner: 2, assignee: 1, duration: 30, frequency: "biweekly", desiredTime: "any" },
+   //   { name: "Organize the garage", id: 3, assigner: 2, assignee: 1, duration: 30, frequency: "biweekly", desiredTime: "any" }
+   // ]
+ });
+
 
   let fetchUsers = () => {
     console.log("BLAHHH")
@@ -51,24 +53,13 @@ function App() {
     }).then(data => {
       console.log("And the JSON");
       console.log(data);
-
-      userData.tasks = data
-  
-      // data.forEach((color) => color.color = intToColor(color.color))   
-      // console.log("Color data after fixing up the hex values:")
-      // console.log(data)
-
-      // setMessage(undefined)
-      // setColors(data)
-      // setLoading(false)
+      setUserData(userData => ({ ...userData, tasks: data }))
     }).catch (problem => {
       console.log("OH NO")
-      // setLoading(false)
-      // setMessage("Unable to load colors from the server.")
     });
   }
 
-  fetchUsers();
+  React.useEffect(fetchUsers, []);
 
   console.log("AFTER")
 

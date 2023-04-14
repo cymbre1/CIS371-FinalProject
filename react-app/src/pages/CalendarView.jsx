@@ -54,8 +54,8 @@ function Base(props) {
 /* Left Menu */
 function MenuUserHeader(props) {
     return <div id="menu-header">
-        <img id="menu-user-image" src={props.user.pfpref}></img>
-        <div id="menu-user-name">{props.user.name}</div>
+        {/* <img id="menu-user-image" src={props.user.pfpref}></img> */}
+        {/* <div id="menu-user-name">{props.user.name}</div> */}
     </div>
 }
 
