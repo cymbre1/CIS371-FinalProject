@@ -47,7 +47,7 @@ class TaskDB {
 
     static insertTask(task) {
         return new Promise((resolve, reject) => {
-            this.db.run(`INSERT INTO Tasks (id, title, task, rating) VALUES ("${task.name}", "${task.frequency}", "${task.duration}", "${task.scheduled}", "${task.assignedBy}", "${task.assignedTo}")`, function(err, data) {
+            this.db.run(`INSERT INTO Tasks (name, frequency, duration, scheduled, assignedBy, assignedTo) VALUES ("${task.name}", "${task.frequency}", "${task.duration}", "${task.scheduled}", "${task.assignedBy}", "${task.assignedTo}")`, function(err, data) {
                 task.pk = this.lastID;
                 resolve(task)
             })

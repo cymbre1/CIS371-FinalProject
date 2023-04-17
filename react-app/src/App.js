@@ -39,32 +39,32 @@ function App() {
 
 
   let fetchTasks = () => {
-    console.log("BLAHHH")
+    console.log("Fetching tasks from database...");
     fetch(`${apiUrl}/viewTasks?timeout`).then(response => {
-      console.log("HELLO")
-      console.log(response)
+      console.log("  in fetchTasks##fetch.then...");
+      console.log("  response", response);
       return response.json();
     }).then(data => {
-      console.log("And the JSON");
-      console.log(data);
+      console.log("  in fetchTasks##fetch.then.then...");
+      console.log("  data", data);
       setUserData(userData => ({ ...userData, tasks: data }))
     }).catch (problem => {
-      console.log("OH NO")
+      console.log("  error fetching tasks...");
     });
   }
 
   let fetchUsers = () => {
-    console.log("BLAHHH")
+    console.log("Fetching users from database...")
     fetch(`${apiUrl}/getUsers?timeout=1000`).then(response => {
-      console.log("HELLO")
-      console.log(response)
+      console.log("  in fetchUsers##fetch.then...")
+      console.log("  response", response)
       return response.json();
     }).then(data => {
-      console.log("And the JSON");
-      console.log(data);
+      console.log("  in fetchUsers##fetch.then.then...");
+      console.log("  data", data);
       setUserData(userData => ({ ...userData, users: data }))
     }).catch (problem => {
-      console.log("OH NO")
+      console.log("  error fetching users...")
     });
   }
 
@@ -77,28 +77,16 @@ function App() {
 
 
   const addNewTask = (taskName, taskDuration, taskFrequencyNum, taskFrequencyWord, estTimeNum, estTimeWord) => {
-    
-    // clone the array of current colors
-    const newTasks = [...userData.tasks]
-    // add new color to the beginning of the list
-    // newTasks.unshift({
-    //   id: uuidv4(),
-    //   rating: 0,
-    //   taskName,
-    //   taskDuration
-    // })
-    // console.log(newColors[0].id)
-    // setColors(newColors)
-  }
+    const newTasks = [...userData.tasks];
+  };
+  
 
   React.useEffect(fetchUsers, []);
   React.useEffect(fetchTasks, []);
 
-  console.log("AFTER")
-
-  const modal = function (state, update) { return { state: state, update: update }; };
+  const modal = function (state, update, crud) { return { state: state, update: update, crud: crud }; };
   const modals = {
-    createTaskModal: modal(...React.useState()),
+    createTaskModal: modal(...React.useState(), { addNewTask }),
     settingsModal: modal(...React.useState())
   };
 
@@ -126,7 +114,7 @@ function PageLayout(props) {
     <>
       <LayoutContainer>
         <SettingsModal showModal={ props.modals.settingsModal.state } setShowModal={ props.modals.settingsModal.update }></SettingsModal>
-        <CreateTaskModal showModal={ props.modals.createTaskModal.state } setShowModal={ props.modals.createTaskModal.update }/>
+        <CreateTaskModal createTaskModal={props.modals.createTaskModal} />
         <Menu data={ props.data } modals={ props.modals }></Menu><Outlet />
     </LayoutContainer>
     </>

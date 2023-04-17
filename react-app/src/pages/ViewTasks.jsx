@@ -13,8 +13,6 @@ function TaskList(props) {
     var addTaskButton = () => {
         props.setShowModal(true);
     }
-    console.log("DATA")
-    console.log(props.data)
 
     const tasks = props.data.tasks.map((i, index) =>
         <Task task={i} users={props.data.users} />
@@ -26,10 +24,6 @@ function TaskList(props) {
 }
 
 function Task(props) {
-    console.log("Users")
-    console.log(props.task.assignedBy)
-    console.log("Inside task")
-    console.log(props.task)
     return <div class="task">
             <div class="task-info" id="task-name">
                 <div class="task-title">{props.task.name}</div>

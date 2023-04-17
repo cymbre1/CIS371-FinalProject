@@ -76,7 +76,12 @@ padding: 0;
 z-index: 10;
 `;
 
-export const CreateTaskModal = ({ showModal, setShowModal }, onNewTask) => {
+export const CreateTaskModal = (props) => {
+    const showModal = props.createTaskModal.state,
+        setShowModal = props.createTaskModal.update,
+        onNewTask = props.createTaskModal.crud.addNewTask;
+    console.log("In CreateTask##CreateTaskModal...");
+    console.log("  onNewTask", onNewTask);
     const modalRef = useRef();
     const [taskName, setTaskName] = React.useState();
     const [taskDuration, setTaskDuration] = React.useState();
@@ -121,9 +126,11 @@ export const CreateTaskModal = ({ showModal, setShowModal }, onNewTask) => {
 
     const submit = e => {
         e.preventDefault();
-        console.log("Submit!")
-        console.log(taskName)
-        onNewTask(taskName, taskDuration, taskFrequencyNum, taskFrequencyWord, estTimeNum, estTimeWord);
+        console.log("Submit!");
+        console.log(taskName, taskDuration, taskFrequencyNum, taskFrequencyWord, estTimeNum, estTimeWord);
+        onNewTask();
+        setShowModal(false);
+        // onNewTask(taskName, taskDuration, taskFrequencyNum, taskFrequencyWord, estTimeNum, estTimeWord);
         // setTitle("");
         // setColor("#000000");
     }
@@ -139,13 +146,11 @@ export const CreateTaskModal = ({ showModal, setShowModal }, onNewTask) => {
                             <form onSubmit={submit}>
                             <div>
                                 <label for="taskname">Task Name: </label>
-                                <input id="taskname" type="text">
-                                    value={taskName}
-                                </input>
+                                <input id="taskname" type="text" onChange={ e => setTaskName(e.target.value) }></input>
                             </div>
                             <div>
                                 <label for="frequency-number">Frequency: </label>
-                                <input id="frequency-number" type="number"></input>
+                                <input id="frequency-number" type="number" onChange={ e => setTaskFrequencyNum(e.target.value) }></input>
                                 <label for="frequency-repeating"> per </label>
                                 <select id="frequency-repeating" type="number">
                                     <option value="week">Week</option>
@@ -155,7 +160,7 @@ export const CreateTaskModal = ({ showModal, setShowModal }, onNewTask) => {
                             </div>
                             <div>
                                 <label for="estimated-time">Estimated Time: </label>
-                                <input id="estimated-time" type="number"></input>
+                                <input id="estimated-time" type="number" onChange={ e => setEstTimeNum(e.target.value) }></input>
                                 <select id="time-type" type="number">
                                     <option value="minutes">Minutes</option>
                                     <option value="hours">Hours</option>

@@ -6,12 +6,10 @@ function Menu(props) {
     
     const calendar = () => {
         navigate("/calendar");
-    }
-
+    };
     const tasks = () => {
         navigate("/taskView");
-    }
-    
+    };
 
     const createTaskModal = () => {
         props.modals.createTaskModal.update(true);
