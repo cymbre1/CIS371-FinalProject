@@ -76,8 +76,16 @@ padding: 0;
 z-index: 10;
 `;
 
-export const CreateTaskModal = ({ showModal, setShowModal }) => {
+export const CreateTaskModal = ({ showModal, setShowModal }, onNewTask) => {
     const modalRef = useRef();
+    const [taskName, setTaskName] = React.useState();
+    const [taskDuration, setTaskDuration] = React.useState();
+    const [taskFrequencyNum, setTaskFrequencyNum] = React.useState();
+    const [taskFrequencyWord, setTaskFrequencyWord] = React.useState();
+    const [estTimeNum, setEstTimeNum] = React.useState();
+    const [estTimeWord, setEstTimeWord] = React.useState();
+
+
     
     /* Animate page open. */
     const animation = useSpring({
@@ -111,6 +119,15 @@ export const CreateTaskModal = ({ showModal, setShowModal }) => {
         [keyPress]
     );
 
+    const submit = e => {
+        e.preventDefault();
+        console.log("Submit!")
+        console.log(taskName)
+        onNewTask(taskName, taskDuration, taskFrequencyNum, taskFrequencyWord, estTimeNum, estTimeWord);
+        // setTitle("");
+        // setColor("#000000");
+    }
+
     return (
         <>
             {showModal ? (
@@ -119,9 +136,12 @@ export const CreateTaskModal = ({ showModal, setShowModal }) => {
                         <ModalWrapper showModal={showModal}>
                         <ModalContent>
                             <h1>Create a Task</h1>
+                            <form onSubmit={submit}>
                             <div>
                                 <label for="taskname">Task Name: </label>
-                                <input id="taskname" type="text"></input>
+                                <input id="taskname" type="text">
+                                    value={taskName}
+                                </input>
                             </div>
                             <div>
                                 <label for="frequency-number">Frequency: </label>
@@ -145,6 +165,7 @@ export const CreateTaskModal = ({ showModal, setShowModal }) => {
                                 <button  id="cancel" onClick={() => setShowModal(false)}>Cancel</button>
                                 <button id="create" >Create Task</button>
                             </div>
+                            </form>
                         </ModalContent>
                         <CloseModalButton
                             aria-label='Close modal'

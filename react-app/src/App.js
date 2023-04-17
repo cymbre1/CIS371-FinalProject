@@ -40,7 +40,7 @@ function App() {
 
   let fetchTasks = () => {
     console.log("BLAHHH")
-    fetch(`${apiUrl}/viewTasks?timeout=1000`).then(response => {
+    fetch(`${apiUrl}/viewTasks?timeout`).then(response => {
       console.log("HELLO")
       console.log(response)
       return response.json();
@@ -66,6 +66,29 @@ function App() {
     }).catch (problem => {
       console.log("OH NO")
     });
+  }
+
+  // copied from https://stackoverflow.com/questions/105034/how-do-i-create-a-guid-uuid
+  function uuidv4() {
+    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+      (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16)
+    );
+  }
+
+
+  const addNewTask = (taskName, taskDuration, taskFrequencyNum, taskFrequencyWord, estTimeNum, estTimeWord) => {
+    
+    // clone the array of current colors
+    const newTasks = [...userData.tasks]
+    // add new color to the beginning of the list
+    // newTasks.unshift({
+    //   id: uuidv4(),
+    //   rating: 0,
+    //   taskName,
+    //   taskDuration
+    // })
+    // console.log(newColors[0].id)
+    // setColors(newColors)
   }
 
   React.useEffect(fetchUsers, []);
