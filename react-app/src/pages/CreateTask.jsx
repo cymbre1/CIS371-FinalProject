@@ -79,16 +79,17 @@ z-index: 10;
 export const CreateTaskModal = (props) => {
     const showModal = props.createTaskModal.state,
         setShowModal = props.createTaskModal.update,
-        onNewTask = props.createTaskModal.crud.addNewTask;
+        onNewTask = props.createTaskModal.crud.addNewTask,
+        onSubmit = props.createTaskModal.crud.submit;
     console.log("In CreateTask##CreateTaskModal...");
     console.log("  onNewTask", onNewTask);
     const modalRef = useRef();
     const [taskName, setTaskName] = React.useState();
+    const [taskDate, setTaskDate] = React.useState();
+    const [taskTime, setTaskTime] = React.useState();
+    const [taskTimeModifier, setTaskTimeModifier] = React.useState("AM");
     const [taskDuration, setTaskDuration] = React.useState();
-    const [taskFrequencyNum, setTaskFrequencyNum] = React.useState();
-    const [taskFrequencyWord, setTaskFrequencyWord] = React.useState();
-    const [estTimeNum, setEstTimeNum] = React.useState();
-    const [estTimeWord, setEstTimeWord] = React.useState();
+    const [taskDurationMultiplier, setTaskDurationMultiplier] = React.useState("1");
 
 
     
@@ -124,17 +125,6 @@ export const CreateTaskModal = (props) => {
         [keyPress]
     );
 
-    const submit = e => {
-        e.preventDefault();
-        console.log("Submit!");
-        console.log(taskName, taskDuration, taskFrequencyNum, taskFrequencyWord, estTimeNum, estTimeWord);
-        onNewTask();
-        setShowModal(false);
-        // onNewTask(taskName, taskDuration, taskFrequencyNum, taskFrequencyWord, estTimeNum, estTimeWord);
-        // setTitle("");
-        // setColor("#000000");
-    }
-
     return (
         <>
             {showModal ? (
@@ -143,27 +133,21 @@ export const CreateTaskModal = (props) => {
                         <ModalWrapper showModal={showModal}>
                         <ModalContent>
                             <h1>Create a Task</h1>
-                            <form onSubmit={submit}>
+                            <form onSubmit={onSubmit}>
                             <div>
                                 <label for="taskname">Task Name: </label>
                                 <input id="taskname" type="text" onChange={ e => setTaskName(e.target.value) }></input>
                             </div>
                             <div>
-                                <label for="frequency-number">Frequency: </label>
-                                <input id="frequency-number" type="number" onChange={ e => setTaskFrequencyNum(e.target.value) }></input>
-                                <label for="frequency-repeating"> per </label>
-                                <select id="frequency-repeating" type="number">
-                                    <option value="week">Week</option>
-                                    <option value="month">Month</option>
-                                    <option value="year">Year</option>
-                                </select>
+                                <label for="date">Date: </label>
+                                <input id="date" type="date" onChange={e => setTaskDate(e.target.value)}></input>
                             </div>
                             <div>
-                                <label for="estimated-time">Estimated Time: </label>
-                                <input id="estimated-time" type="number" onChange={ e => setEstTimeNum(e.target.value) }></input>
-                                <select id="time-type" type="number">
-                                    <option value="minutes">Minutes</option>
-                                    <option value="hours">Hours</option>
+                                <label for="duration">Duration: </label>
+                                <input id="duration" type="number" onChange={ e => setTaskDuration(e.target.value) }></input>
+                                <select id="duration-multiplier" type="number" onChange={ e => setTaskDurationMultiplier(e.target.options[e.target.selectedIndex].value) }>
+                                    <option value="1" selected>Minutes</option>
+                                    <option value="60">Hours</option>
                                 </select>
                             </div>
                             <div>

@@ -19,10 +19,10 @@ class TaskDB {
             this.db.run('INSERT INTO Users ( name, email, password, pfpref) VALUES ("Cymbre Spoehr", "scottcym@mail.gvsu.edu", "password123", "pfp/cymbre-spoehr.jpg" );');
             this.db.run('INSERT INTO Users ( name, email, password, pfpref) VALUES ("Chase Kinard", "kinardc@mail.gvsu.edu", "testPassword!", "pfp/chase-kinard.png");');
 
-            this.db.run('CREATE TABLE Tasks (id INTEGER PRIMARY KEY, name TEXT NOT NULL, frequency TEXT NOT NULL, duration TEXT NOT NULL, scheduled TEXT NOT NULL, assignedBy INTEGER NOT NULL, assignedTo INTEGER);');
-            this.db.run('INSERT INTO Tasks (name, frequency, duration, scheduled, assignedBy, assignedTo) VALUES ("Clean out the fridge", "weekly", "60 minutes", "7:00, Monday", "1", "2");');
-            this.db.run('INSERT INTO Tasks (name, frequency, duration, scheduled, assignedBy, assignedTo) VALUES ("Sweep the basement", "biweekly", "30 minutes", "any", "2", "1");');
-            this.db.run('INSERT INTO Tasks (name, frequency, duration, scheduled, assignedBy, assignedTo) VALUES ("Organize the garage", "biweekly", "30 minutes", "any", "2", "1");');
+            this.db.run('CREATE TABLE Tasks (id INTEGER PRIMARY KEY, name TEXT NOT NULL, date TEXT NOT NULL, duration INTEGER NOT NULL, assignedBy INTEGER, assignedTo INTEGER);');
+            this.db.run('INSERT INTO Tasks (name, date, duration, assignedBy, assignedTo) VALUES ("Clean out the fridge", "4-19-2023", "30", "1", "2");');
+            this.db.run('INSERT INTO Tasks (name, date, duration, assignedBy, assignedTo) VALUES ("Sweep the basement", "4-20-2023", "60", "2", "1");');
+            this.db.run('INSERT INTO Tasks (name, date, duration, assignedBy, assignedTo) VALUES ("Organize the garage", "4-21-2023", "120", "2", "1");');
 
         })
 
@@ -47,7 +47,7 @@ class TaskDB {
 
     static insertTask(task) {
         return new Promise((resolve, reject) => {
-            this.db.run(`INSERT INTO Tasks (name, frequency, duration, scheduled, assignedBy, assignedTo) VALUES ("${task.name}", "${task.frequency}", "${task.duration}", "${task.scheduled}", "${task.assignedBy}", "${task.assignedTo}")`, function(err, data) {
+            this.db.run(`INSERT INTO Tasks (name, date, duration) VALUES ("${task.name}", "${task.date}", "${task.duration}")`, function(err, data) {
                 task.pk = this.lastID;
                 resolve(task)
             })

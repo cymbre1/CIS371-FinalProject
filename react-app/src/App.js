@@ -11,7 +11,7 @@ import React from 'react';
 import { CreateTaskModal } from './pages/CreateTask';
 import { SettingsModal } from './pages/SettingsModal';
 
-const apiUrl = 'http://localhost:3001'
+const apiUrl = 'http://localhost:3002'
 
 function App() {
   const [userData, setUserData] = React.useState({
@@ -79,6 +79,12 @@ function App() {
   const addNewTask = (taskName, taskDuration, taskFrequencyNum, taskFrequencyWord, estTimeNum, estTimeWord) => {
     const newTasks = [...userData.tasks];
   };
+
+  const submit = e => {
+      e.preventDefault();
+      console.log("Submit!");
+      console.log(taskName, taskDate, taskDuration, taskDurationMultiplier);
+  }
   
 
   React.useEffect(fetchUsers, []);
@@ -86,7 +92,7 @@ function App() {
 
   const modal = function (state, update, crud) { return { state: state, update: update, crud: crud }; };
   const modals = {
-    createTaskModal: modal(...React.useState(), { addNewTask }),
+    createTaskModal: modal(...React.useState(), { addNewTask, submit }),
     settingsModal: modal(...React.useState())
   };
 
