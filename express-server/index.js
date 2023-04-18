@@ -56,6 +56,25 @@ app.post('/postTask', async (req, res) => {
     }
 })
 
+app.post('/editTask/:id', async (req, res) => {
+    const id = req.params.id;
+    console.log(`Editing task with id #${ id }.`);
+
+    // With JSON data, req.body is the entire parsed JSON object
+    console.log(req.body);
+    if (req.body == undefined) {
+        console.log("Failed to parse body")
+        res.status(500) 
+        res.send({ message: 'Post request was unable to parse data' })
+    } else {
+        TaskDB.updateTask(req.body).then((data) => {
+            console.log("Sending:  ")
+            console.log(data)
+            res.json(data);
+        })
+    }
+})
+
 app.get('/initdb', (req, res) => {
     require('./TaskDB').initialize()
     res.send('Initialized.')

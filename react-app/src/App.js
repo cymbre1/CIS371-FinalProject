@@ -64,6 +64,7 @@ function App() {
   
   
   const defaultTaskData = {
+    id: undefined,
     name: undefined,
     date: undefined,
     duration: undefined,
@@ -76,6 +77,30 @@ function App() {
     modals.createTaskModal.update(false);
     console.log("submit: ", taskData);
     fetch(`${apiUrl}/postTask`, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify({
+        name: taskData.name,
+        date: taskData.date,
+        duration: taskData.duration * taskData.durationMultiplier
+      }), // body data type must match "Content-Type" header
+    })
+      .then( response => response.json() )
+      .then( data => setUserData( userData => ({ ...userData, tasks: [ ...userData.tasks, data ] }) ) )
+      .catch( err => console.error(err) );
+  }
+
+  function onEdit(event) {
+    event.preventDefault();
+    console.log("submit: ", taskData);
+    fetch(`${apiUrl}/postTask/${ taskData.id }`, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached

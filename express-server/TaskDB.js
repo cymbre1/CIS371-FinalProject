@@ -68,7 +68,7 @@ class TaskDB {
 
     static updateTask(task) {
         return new Promise((resolve, reject) => {
-            const sql = `UPDATE Tasks SET name="${task.name}", frequency="${task.frequency}", duration="${task.duration}", scheduled="${task.scheduled}", assignedBy="${task.assignedBy}", assignedTo="${task.assignedTo}" where pk="${task.pk}"`
+            const sql = `UPDATE Tasks SET name="${task.name}", date="${task.date}", duration="${task.duration}", assignedBy="${task.assignedBy}", assignedTo="${task.assignedTo}" where id="${task.id}"`
             this.db.run(sql, function(err, data) {   
                 if (err != null) {
                     console.log("Error updating ");

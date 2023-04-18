@@ -44,8 +44,8 @@ function Task(props) {
                     <img id="task-user-image" src={props.users[props.task.assignedTo - 1].pfpref} alt=""></img>
                 </div>
                 <div>
-                    <button class="crud-button"><FontAwesomeIcon icon={faTrash} size="xl" inverse/>  </button>
-                    <button class="crud-button"><FontAwesomeIcon icon={faEdit} size="xl" inverse/></button>
+                    <button class="crud-button"><FontAwesomeIcon icon={faTrash} size="xl" inverse/></button>
+                    <button class="crud-button" onClick={ e => editTask(e) }><FontAwesomeIcon icon={faEdit} size="xl" inverse/></button>
                 </div>
             </div>
         </div>
