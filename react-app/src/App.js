@@ -37,36 +37,22 @@ function App() {
    tasks: []
   });
 
-
   let fetchTasks = () => {
-    console.log("Fetching tasks from database...");
-    fetch(`${apiUrl}/viewTasks?timeout`).then(response => {
-      console.log("  in fetchTasks##fetch.then...");
-      console.log("  response", response);
-      return response.json();
-    }).then(data => {
-      console.log("  in fetchTasks##fetch.then.then...");
-      console.log("  data", data);
-      setUserData(userData => ({ ...userData, tasks: data }))
-    }).catch (problem => {
-      console.log("  error fetching tasks...");
-    });
-  }
+    fetch(`${apiUrl}/viewTasks?timeout`)
+      .then( response => response.json() )
+      .then( data => {
+        setUserData(userData => ({ ...userData, tasks: data }));
+        console.log("fetchTasks: ", data);
+      } )
+      .catch( err => console.error(err) );
+  };
 
   let fetchUsers = () => {
-    console.log("Fetching users from database...")
-    fetch(`${apiUrl}/getUsers?timeout=1000`).then(response => {
-      console.log("  in fetchUsers##fetch.then...")
-      console.log("  response", response)
-      return response.json();
-    }).then(data => {
-      console.log("  in fetchUsers##fetch.then.then...");
-      console.log("  data", data);
-      setUserData(userData => ({ ...userData, users: data }))
-    }).catch (problem => {
-      console.log("  error fetching users...")
-    });
-  }
+    fetch( `${apiUrl}/getUsers?timeout=1000` )
+      .then( response => response.json() )
+      .then( data => setUserData( userData => ({ ...userData, users: data }) ) )
+      .catch( err => console.error(err) );
+  };
 
   // copied from https://stackoverflow.com/questions/105034/how-do-i-create-a-guid-uuid
   function uuidv4() {
@@ -75,24 +61,62 @@ function App() {
     );
   }
 
-
-  const addNewTask = (taskName, taskDuration, taskFrequencyNum, taskFrequencyWord, estTimeNum, estTimeWord) => {
-    const newTasks = [...userData.tasks];
-  };
-
-  const submit = e => {
-      e.preventDefault();
-      console.log("Submit!");
-      console.log(taskName, taskDate, taskDuration, taskDurationMultiplier);
-  }
   
+  
+  const defaultTaskData = {
+    name: undefined,
+    date: undefined,
+    duration: undefined,
+    durationMultiplier: "1"
+  };
+  const [taskData, setTaskData] = React.useState(defaultTaskData);
+  
+  function submit(event) {
+    event.preventDefault();
+    modals.createTaskModal.update(false);
+    console.log("submit: ", taskData);
+    fetch(`${apiUrl}/postTask`, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify({
+        name: taskData.name,
+        date: taskData.date,
+        duration: taskData.duration * taskData.durationMultiplier
+      }), // body data type must match "Content-Type" header
+    })
+      .then( response => response.json() )
+      .then( data => setUserData( userData => ({ ...userData, tasks: [ ...userData.tasks, data ] }) ) )
+      .catch( err => console.error(err) );
+  }
+
+  function updateFormData(formData) {
+    setTaskData({
+      ...taskData,
+      ...formData
+    });
+    console.log("updateFormData: ", taskData);
+  }
+
+  function cancel(event) {
+    event.preventDefault();
+    setTaskData({ ...defaultTaskData });
+    modals.createTaskModal.update(false);
+    console.log("cancel: ", taskData);
+  }
 
   React.useEffect(fetchUsers, []);
   React.useEffect(fetchTasks, []);
 
   const modal = function (state, update, crud) { return { state: state, update: update, crud: crud }; };
   const modals = {
-    createTaskModal: modal(...React.useState(), { addNewTask, submit }),
+    createTaskModal: modal(...React.useState(), { updateFormData, submit, cancel }),
     settingsModal: modal(...React.useState())
   };
 

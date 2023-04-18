@@ -56,10 +56,15 @@ app.post('/postTask', async (req, res) => {
     }
 })
 
-app.get('/init', (req, res) => {
+app.get('/initdb', (req, res) => {
     require('./TaskDB').initialize()
     res.send('Initialized.')
 })
+
+app.get('/resetdb', (req, res) => {
+    require('./TaskDB').reset();
+    res.send('Reset database.');
+});
 
 /* Launch the server */
 app.listen(port, () => console.log(`Backend listening on port ${port}!`))

@@ -79,19 +79,10 @@ z-index: 10;
 export const CreateTaskModal = (props) => {
     const showModal = props.createTaskModal.state,
         setShowModal = props.createTaskModal.update,
-        onNewTask = props.createTaskModal.crud.addNewTask,
-        onSubmit = props.createTaskModal.crud.submit;
-    console.log("In CreateTask##CreateTaskModal...");
-    console.log("  onNewTask", onNewTask);
+        onCancel = props.createTaskModal.crud.cancel,
+        onSubmit = props.createTaskModal.crud.submit,
+        onChange = props.createTaskModal.crud.updateFormData;
     const modalRef = useRef();
-    const [taskName, setTaskName] = React.useState();
-    const [taskDate, setTaskDate] = React.useState();
-    const [taskTime, setTaskTime] = React.useState();
-    const [taskTimeModifier, setTaskTimeModifier] = React.useState("AM");
-    const [taskDuration, setTaskDuration] = React.useState();
-    const [taskDurationMultiplier, setTaskDurationMultiplier] = React.useState("1");
-
-
     
     /* Animate page open. */
     const animation = useSpring({
@@ -133,26 +124,26 @@ export const CreateTaskModal = (props) => {
                         <ModalWrapper showModal={showModal}>
                         <ModalContent>
                             <h1>Create a Task</h1>
-                            <form onSubmit={onSubmit}>
+                            <form>
                             <div>
-                                <label for="taskname">Task Name: </label>
-                                <input id="taskname" type="text" onChange={ e => setTaskName(e.target.value) }></input>
+                                <label for="name">Task Name: </label>
+                                <input id="name" type="text" onChange={ e => onChange({ name: e.target.value }) }></input>
                             </div>
                             <div>
                                 <label for="date">Date: </label>
-                                <input id="date" type="date" onChange={e => setTaskDate(e.target.value)}></input>
+                                <input id="date" type="date" onChange={ e => onChange({ date: e.target.value }) }></input>
                             </div>
                             <div>
                                 <label for="duration">Duration: </label>
-                                <input id="duration" type="number" onChange={ e => setTaskDuration(e.target.value) }></input>
-                                <select id="duration-multiplier" type="number" onChange={ e => setTaskDurationMultiplier(e.target.options[e.target.selectedIndex].value) }>
+                                <input id="duration" type="number" onChange={ e => onChange({ duration: e.target.value }) }></input>
+                                <select id="duration-multiplier" type="number" onChange={ e => onChange({ durationMultiplier: e.target.options[e.target.selectedIndex].value }) }>
                                     <option value="1" selected>Minutes</option>
                                     <option value="60">Hours</option>
                                 </select>
                             </div>
                             <div>
-                                <button  id="cancel" onClick={() => setShowModal(false)}>Cancel</button>
-                                <button id="create" >Create Task</button>
+                                <button  id="cancel" type="button" onClick={e => onCancel(e)}>Cancel</button>
+                                <button id="create" type="submit" onClick={e => onSubmit(e)} >Create Task</button>
                             </div>
                             </form>
                         </ModalContent>

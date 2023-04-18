@@ -5,7 +5,8 @@ class TaskDB {
     static reset() {
         console.log('resetting test DB')
         TaskDB.db = new sqlite3.Database('tasks.test.sqlite');
-        this.db.run('DROP TABLE Tasks')
+        this.db.run('DROP TABLE Tasks');
+        this.db.run('DROP TABLE Users');
         TaskDB.initialize();
     }
 
@@ -48,7 +49,7 @@ class TaskDB {
     static insertTask(task) {
         return new Promise((resolve, reject) => {
             this.db.run(`INSERT INTO Tasks (name, date, duration) VALUES ("${task.name}", "${task.date}", "${task.duration}")`, function(err, data) {
-                task.pk = this.lastID;
+                task.id = this.lastID;
                 resolve(task)
             })
         })

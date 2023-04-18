@@ -14,6 +14,7 @@ function TaskList(props) {
         props.setShowModal(true);
     }
 
+    console.log("TaskList: ", props.data.tasks);
     const tasks = props.data.tasks.map((i, index) =>
         <Task task={i} users={props.data.users} />
     );
