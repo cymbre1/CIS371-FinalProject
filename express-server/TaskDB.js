@@ -5,8 +5,8 @@ class TaskDB {
     static reset() {
         console.log('resetting test DB')
         TaskDB.db = new sqlite3.Database('tasks.test.sqlite');
-        // this.db.run('DROP TABLE Tasks');
-        // this.db.run('DROP TABLE Users');
+        this.db.run('DROP TABLE Tasks');
+        this.db.run('DROP TABLE Users');
         TaskDB.initialize();
     }
 
