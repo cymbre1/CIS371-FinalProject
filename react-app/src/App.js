@@ -61,8 +61,6 @@ function App() {
     );
   }
 
-  
-  
   const defaultTaskData = {
     id: undefined,
     name: undefined,
