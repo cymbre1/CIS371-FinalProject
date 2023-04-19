@@ -71,6 +71,8 @@ function App() {
     durationMultiplier: "1"
   };
   const [taskData, setTaskData] = React.useState(defaultTaskData);
+
+  // const [editing, setEditing] = React.useState();
   
   function submit(event) {
     event.preventDefault();
@@ -95,12 +97,13 @@ function App() {
       .then( response => response.json() )
       .then( data => setUserData( userData => ({ ...userData, tasks: [ ...userData.tasks, data ] }) ) )
       .catch( err => console.error(err) );
-  }
+      setTaskData(defaultTaskData);
+    }
 
   function onEdit(event) {
     event.preventDefault();
-    console.log("submit: ", taskData);
-    fetch(`${apiUrl}/postTask/${ taskData.id }`, {
+    modals.createTaskModal.update(false);
+    fetch(`${apiUrl}/editTask/${taskData.id}`, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -111,14 +114,52 @@ function App() {
       redirect: "follow", // manual, *follow, error
       referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
       body: JSON.stringify({
+        id: taskData.id,
         name: taskData.name,
         date: taskData.date,
-        duration: taskData.duration * taskData.durationMultiplier
+        duration: taskData.duration * taskData.durationMultiplier,
+        assignedBy: 1,
+        assignedTo: 1
       }), // body data type must match "Content-Type" header
     })
       .then( response => response.json() )
-      .then( data => setUserData( userData => ({ ...userData, tasks: [ ...userData.tasks, data ] }) ) )
+      .then( data => setUserData( userData => ({ ...userData, tasks: userData.tasks.reduce((partial, item) => {
+        console.log("partial", partial);
+        return partial.concat(item.id === taskData.id ? data : item);
+      }, []) }) ) )
       .catch( err => console.error(err) );
+      setTaskData(defaultTaskData);
+  }
+
+  function deleteTask(event, id) {
+    console.log("ID", id);
+    event.preventDefault();
+    fetch(`${apiUrl}/deleteTask/${id}`, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify({
+        id: id,
+        name: "",
+        date: "",
+        duration: taskData.duration * taskData.durationMultiplier,
+        assignedBy: 1,
+        assignedTo: 1
+      }), // body data type must match "Content-Type" header
+    })
+      .then( response => response.json() )
+      .then( data => setUserData( userData => ({ ...userData,  tasks: userData.tasks.reduce((partial, item) => {
+        console.log("partial", partial);
+        return item.id !== id ? partial.concat(item) : partial;
+      }, []) }) ) )
+      .catch( err => console.error(err) );
+      setTaskData(defaultTaskData);
   }
 
   function updateFormData(formData) {
@@ -131,9 +172,10 @@ function App() {
 
   function cancel(event) {
     event.preventDefault();
-    setTaskData({ ...defaultTaskData });
+    setTaskData({ defaultTaskData });
     modals.createTaskModal.update(false);
     console.log("cancel: ", taskData);
+    // setTaskData(defaultTaskData);
   }
 
   React.useEffect(fetchUsers, []);
@@ -141,7 +183,7 @@ function App() {
 
   const modal = function (state, update, crud) { return { state: state, update: update, crud: crud }; };
   const modals = {
-    createTaskModal: modal(...React.useState(), { updateFormData, submit, cancel }),
+    createTaskModal: modal(...React.useState(), { updateFormData, submit, cancel, onEdit }),
     settingsModal: modal(...React.useState())
   };
 
@@ -150,9 +192,9 @@ function App() {
     <Routes>
       <Route path="/login" element={<Login></Login>}></Route>
       <Route path='/createAccount' element={<CreateAcct></CreateAcct>}></Route>
-      <Route path="/" element={<PageLayout data={userData} modals={ modals }/>}>
+      <Route path="/" element={<PageLayout data={userData} modals={ modals } taskData={taskData} />}>
         <Route path="calendar" element={<Base data={ userData } />}></Route>
-        <Route path="taskView" element={<TaskViewBase data={ userData } createTaskModal={ modals.createTaskModal }/>}></Route>
+        <Route path="taskView" element={<TaskViewBase data={ userData } createTaskModal={ modals.createTaskModal } taskData={taskData} setTaskData={setTaskData} deleteTask={deleteTask} />}></Route>
       </Route> 
     </Routes>
     </BrowserRouter>
@@ -169,7 +211,7 @@ function PageLayout(props) {
     <>
       <LayoutContainer>
         <SettingsModal showModal={ props.modals.settingsModal.state } setShowModal={ props.modals.settingsModal.update }></SettingsModal>
-        <CreateTaskModal createTaskModal={props.modals.createTaskModal} />
+        <CreateTaskModal createTaskModal={props.modals.createTaskModal} taskData={props.taskData} />
         <Menu data={ props.data } modals={ props.modals }></Menu><Outlet />
     </LayoutContainer>
     </>

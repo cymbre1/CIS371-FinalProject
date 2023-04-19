@@ -21,9 +21,9 @@ class TaskDB {
             this.db.run('INSERT INTO Users ( name, email, password, pfpref) VALUES ("Chase Kinard", "kinardc@mail.gvsu.edu", "testPassword!", "pfp/chase-kinard.png");');
 
             this.db.run('CREATE TABLE Tasks (id INTEGER PRIMARY KEY, name TEXT NOT NULL, date TEXT NOT NULL, duration INTEGER NOT NULL, assignedBy INTEGER, assignedTo INTEGER);');
-            this.db.run('INSERT INTO Tasks (name, date, duration, assignedBy, assignedTo) VALUES ("Clean out the fridge", "4-19-2023", "30", "1", "2");');
-            this.db.run('INSERT INTO Tasks (name, date, duration, assignedBy, assignedTo) VALUES ("Sweep the basement", "4-20-2023", "60", "2", "1");');
-            this.db.run('INSERT INTO Tasks (name, date, duration, assignedBy, assignedTo) VALUES ("Organize the garage", "4-21-2023", "120", "2", "1");');
+            this.db.run('INSERT INTO Tasks (name, date, duration, assignedBy, assignedTo) VALUES ("Clean out the fridge", "2023-04-19", "30", "1", "2");');
+            this.db.run('INSERT INTO Tasks (name, date, duration, assignedBy, assignedTo) VALUES ("Sweep the basement", "2023-04-20", "60", "2", "1");');
+            this.db.run('INSERT INTO Tasks (name, date, duration, assignedBy, assignedTo) VALUES ("Organize the garage", "2023-04-21", "120", "2", "1");');
 
         })
 
@@ -76,9 +76,28 @@ class TaskDB {
                     console.log(err);
                     reject({message: err})
                 } else if (this.changes === 1) {
-                    resolve("Success")
+                    resolve(task)
                 } else {
                     reject("Unknown problem.  There were " + this.changes + "changes.")
+                }
+            })
+        })
+    }
+
+    static deleteTask(task) {
+        console.log(task)
+        return new Promise((reslve, reject) => {
+            const sql = `DELETE From Tasks WHERE id=${task.id};`
+            this.db.run(sql, function(err, data) {   
+                if (err != null) {
+                    console.log("Error updating ");
+                    console.log(task);
+                    console.log(err);
+                    reject({message: err});
+                } else if (this.changes === 1) {
+                    reslve("Success");
+                } else {
+                    reject("Unknown problem.  There were " + this.changes + "changes.");
                 }
             })
         })

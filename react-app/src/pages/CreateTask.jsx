@@ -81,7 +81,8 @@ export const CreateTaskModal = (props) => {
         setShowModal = props.createTaskModal.update,
         onCancel = props.createTaskModal.crud.cancel,
         onSubmit = props.createTaskModal.crud.submit,
-        onChange = props.createTaskModal.crud.updateFormData;
+        onChange = props.createTaskModal.crud.updateFormData,
+        onEdit = props.createTaskModal.crud.onEdit;
     const modalRef = useRef();
     
     /* Animate page open. */
@@ -116,6 +117,9 @@ export const CreateTaskModal = (props) => {
         [keyPress]
     );
 
+    console.log("DATE")
+    console.log(props.taskData)
+
     return (
         <>
             {showModal ? (
@@ -127,15 +131,15 @@ export const CreateTaskModal = (props) => {
                             <form>
                             <div>
                                 <label for="name">Task Name: </label>
-                                <input id="name" type="text" onChange={ e => onChange({ name: e.target.value }) }></input>
+                                <input id="name" type="text" onChange={ e => onChange({ name: e.target.value })} value={props.taskData.name ?? ""}></input>
                             </div>
                             <div>
                                 <label for="date">Date: </label>
-                                <input id="date" type="date" onChange={ e => onChange({ date: e.target.value }) }></input>
+                                <input id="date" type="date" onChange={ e => onChange({ date: e.target.value })} value={props.taskData.date ?? "yy-MM-dd"}></input>
                             </div>
                             <div>
                                 <label for="duration">Duration: </label>
-                                <input id="duration" type="number" onChange={ e => onChange({ duration: e.target.value }) }></input>
+                                <input id="duration" type="number" onChange={ e => onChange({ duration: e.target.value }) } value={props.taskData.duration ?? ""}></input>
                                 <select id="duration-multiplier" type="number" onChange={ e => onChange({ durationMultiplier: e.target.options[e.target.selectedIndex].value }) }>
                                     <option value="1" selected>Minutes</option>
                                     <option value="60">Hours</option>
@@ -143,13 +147,13 @@ export const CreateTaskModal = (props) => {
                             </div>
                             <div>
                                 <button  id="cancel" type="button" onClick={e => onCancel(e)}>Cancel</button>
-                                <button id="create" type="submit" onClick={e => onSubmit(e)} >Create Task</button>
+                                <button id="create" type="submit" onClick={e => props.taskData.id === undefined ? onSubmit(e) : onEdit(e, props.taskData.id)} >Create Task</button>
                             </div>
                             </form>
                         </ModalContent>
                         <CloseModalButton
                             aria-label='Close modal'
-                            onClick={() => setShowModal(false)}
+                            onClick={e => onCancel(e)}
                         />
                         </ModalWrapper>
                     </animated.div>
