@@ -13,11 +13,14 @@
 	// "features": {},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [3000, 5500],
+	// "forwardPorts": [3001, 3002],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "apt update && cd react-app/ && npm install react-scripts",
-	"postAttachCommand": "cd react-app/",
+	"postCreateCommand": {
+		"update": "apt update",
+		"react": "cd react-app/ && npm install react-scripts",
+		"express": "cd express-server/ && npm install express"
+	},
 
 	// Configure tool-specific properties.
 	"customizations": {
@@ -25,8 +28,7 @@
 			"extensions": [
 				"eamodio.gitlens",
 				"mblode.pretty-formatter",
-				"xabikos.JavaScriptSnippets",
-				"ritwickdey.LiveServer"
+				"xabikos.JavaScriptSnippets"
 			]
 		}
 	}

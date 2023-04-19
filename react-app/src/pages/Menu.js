@@ -6,12 +6,10 @@ function Menu(props) {
     
     const calendar = () => {
         navigate("/calendar");
-    }
-
+    };
     const tasks = () => {
         navigate("/taskView");
-    }
-    
+    };
 
     const createTaskModal = () => {
         props.modals.createTaskModal.update(true);
@@ -36,7 +34,7 @@ function MenuUserHeader(props) {
         props.settingsModal.update(true);
     }
     return <div id="menu-header">
-        <img id="menu-user-image" src={ props.user.pfpref } alt=""></img>
+        <img id="menu-user-image" src={ "pfp/cymbre-spoehr.jpg" } alt=""></img>
         <div id="menu-user-name">{props.user.name}</div>
         <MenuSettingsButton text="⚙" click={ settingsModal }></MenuSettingsButton>
     </div>

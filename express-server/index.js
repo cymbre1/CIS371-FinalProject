@@ -3,7 +3,7 @@ const express = require('express')
 const TaskDB = require('./TaskDB')
 
 const app = express()
-const port = 3001  // so we don't conflict with React on 3000
+const port = 3002  // so we don't conflict with React on 3001
 
 // Tell Express to parse the body as JSON.
 // (This is a different format than data sent by an HTML form.)
@@ -13,7 +13,7 @@ app.use(express.json());
 // that didn't originate here
 // !!!!! Don't ever use "*" in production!!!
 app.use(function (req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000")
+    res.setHeader("Access-Control-Allow-Origin", "*")
     res.setHeader("Access-Control-Allow-Headers", "content-type")
     next();
 });
@@ -38,7 +38,7 @@ app.get('/getUsers', async (req, res) => {
     setTimeout(async () => res.json(await TaskDB.allUsers()), delay)
 })
 
-app.post('/viewTask', async (req, res) => {
+app.post('/postTask', async (req, res) => {
     console.log("About to create a new task");
 
     // With JSON data, req.body is the entire parsed JSON object
@@ -56,10 +56,53 @@ app.post('/viewTask', async (req, res) => {
     }
 })
 
-app.get('/init', (req, res) => {
+app.post('/editTask/:id', async (req, res) => {
+    const id = req.params.id;
+    console.log(`Editing task with id #${ id }.`);
+
+    // With JSON data, req.body is the entire parsed JSON object
+    console.log(req.body);
+    if (req.body == undefined) {
+        console.log("Failed to parse body")
+        res.status(500) 
+        res.send({ message: 'Post request was unable to parse data' })
+    } else {
+        TaskDB.updateTask(req.body).then((data) => {
+            console.log("Sending:  ")
+            console.log(data)
+            res.json(data);
+        })
+    }
+})
+
+app.post('/deleteTask/:id', async (req, res) => {
+    const id = req.params.id;
+    console.log(`Deleting task with id #${ id }.`);
+
+    // With JSON data, req.body is the entire parsed JSON object
+    console.log(req.body);
+    if (req.body == undefined) {
+        console.log("Failed to parse body")
+        res.status(500) 
+        res.send({ message: 'Post request was unable to parse data' })
+    } else {
+        TaskDB.deleteTask(req.body).then((data) => {
+            console.log("Sending:  ")
+            console.log(data)
+            res.json(data);
+        })
+    }
+})
+
+app.get('/initdb', (req, res) => {
     require('./TaskDB').initialize()
     res.send('Initialized.')
 })
+
+app.get('/resetdb', (req, res) => {
+    require('./TaskDB').reset();
+    res.send('Reset database.');
+});
 
 /* Launch the server */
 app.listen(port, () => console.log(`Backend listening on port ${port}!`))

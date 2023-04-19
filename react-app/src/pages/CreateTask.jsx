@@ -76,16 +76,14 @@ padding: 0;
 z-index: 10;
 `;
 
-export const CreateTaskModal = ({ showModal, setShowModal }, onNewTask) => {
+export const CreateTaskModal = (props) => {
+    const showModal = props.createTaskModal.state,
+        setShowModal = props.createTaskModal.update,
+        onCancel = props.createTaskModal.crud.cancel,
+        onSubmit = props.createTaskModal.crud.submit,
+        onChange = props.createTaskModal.crud.updateFormData,
+        onEdit = props.createTaskModal.crud.onEdit;
     const modalRef = useRef();
-    const [taskName, setTaskName] = React.useState();
-    const [taskDuration, setTaskDuration] = React.useState();
-    const [taskFrequencyNum, setTaskFrequencyNum] = React.useState();
-    const [taskFrequencyWord, setTaskFrequencyWord] = React.useState();
-    const [estTimeNum, setEstTimeNum] = React.useState();
-    const [estTimeWord, setEstTimeWord] = React.useState();
-
-
     
     /* Animate page open. */
     const animation = useSpring({
@@ -119,14 +117,8 @@ export const CreateTaskModal = ({ showModal, setShowModal }, onNewTask) => {
         [keyPress]
     );
 
-    const submit = e => {
-        e.preventDefault();
-        console.log("Submit!")
-        console.log(taskName)
-        onNewTask(taskName, taskDuration, taskFrequencyNum, taskFrequencyWord, estTimeNum, estTimeWord);
-        // setTitle("");
-        // setColor("#000000");
-    }
+    console.log("DATE")
+    console.log(props.taskData)
 
     return (
         <>
@@ -136,40 +128,32 @@ export const CreateTaskModal = ({ showModal, setShowModal }, onNewTask) => {
                         <ModalWrapper showModal={showModal}>
                         <ModalContent>
                             <h1>Create a Task</h1>
-                            <form onSubmit={submit}>
+                            <form>
                             <div>
-                                <label for="taskname">Task Name: </label>
-                                <input id="taskname" type="text">
-                                    value={taskName}
-                                </input>
+                                <label for="name">Task Name: </label>
+                                <input id="name" type="text" onChange={ e => onChange({ name: e.target.value })} value={props.taskData.name ?? ""}></input>
                             </div>
                             <div>
-                                <label for="frequency-number">Frequency: </label>
-                                <input id="frequency-number" type="number"></input>
-                                <label for="frequency-repeating"> per </label>
-                                <select id="frequency-repeating" type="number">
-                                    <option value="week">Week</option>
-                                    <option value="month">Month</option>
-                                    <option value="year">Year</option>
+                                <label for="date">Date: </label>
+                                <input id="date" type="date" onChange={ e => onChange({ date: e.target.value })} value={props.taskData.date ?? "yy-MM-dd"}></input>
+                            </div>
+                            <div>
+                                <label for="duration">Duration: </label>
+                                <input id="duration" type="number" onChange={ e => onChange({ duration: e.target.value }) } value={props.taskData.duration ?? ""}></input>
+                                <select id="duration-multiplier" type="number" onChange={ e => onChange({ durationMultiplier: e.target.options[e.target.selectedIndex].value }) }>
+                                    <option value="1" selected>Minutes</option>
+                                    <option value="60">Hours</option>
                                 </select>
                             </div>
                             <div>
-                                <label for="estimated-time">Estimated Time: </label>
-                                <input id="estimated-time" type="number"></input>
-                                <select id="time-type" type="number">
-                                    <option value="minutes">Minutes</option>
-                                    <option value="hours">Hours</option>
-                                </select>
-                            </div>
-                            <div>
-                                <button  id="cancel" onClick={() => setShowModal(false)}>Cancel</button>
-                                <button id="create" >Create Task</button>
+                                <button  id="cancel" type="button" onClick={e => onCancel(e)}>Cancel</button>
+                                <button id="create" type="submit" onClick={e => props.taskData.id === undefined ? onSubmit(e) : onEdit(e, props.taskData.id)} >Create Task</button>
                             </div>
                             </form>
                         </ModalContent>
                         <CloseModalButton
                             aria-label='Close modal'
-                            onClick={() => setShowModal(false)}
+                            onClick={e => onCancel(e)}
                         />
                         </ModalWrapper>
                     </animated.div>
