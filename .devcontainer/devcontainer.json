@@ -19,7 +19,7 @@
 	"postCreateCommand": {
 		"update": "apt update",
 		"react": "cd react-app/ && npm install react-scripts",
-		"express": "cd express-server/ && npm install express"
+		"express": "cd express-server/ && npm install express && npm install cookie-parser"
 	},
 
 	// Configure tool-specific properties.

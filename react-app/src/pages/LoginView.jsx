@@ -27,7 +27,7 @@ const LoginButton = styled.button `
     border-radius: 0px;
 `;
 
-export const Login = (() => {
+export const Login = ((props) => {
     const navigate = useNavigate();
 
     const [login, setLogin] = React.useState({username: "", password: ""});
@@ -54,10 +54,12 @@ export const Login = (() => {
       })
         .then( response => response.json() )
         .then( data => {
-          if(data === "Success") {
+          if(data != "Invalid") {
+            console.log("loginView data: ", data);
+            props.setUser(data);
             navigate("/taskView");
           }
-        } )
+        })
         .catch( err => console.error(err) );
     }
   

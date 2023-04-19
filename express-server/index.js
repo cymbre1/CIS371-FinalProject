@@ -1,4 +1,3 @@
-const { query } = require('express')
 const express = require('express')
 const TaskDB = require('./TaskDB')
 
@@ -101,8 +100,8 @@ app.post('/login', async(req, res) => {
         res.send({ message: 'Post request was unable to parse data' })
     } else {
         TaskDB.validateUser(req.body).then((data) => {
-            console.log("Sending:  ")
-            console.log(data)
+            console.log("Sending:  ");
+            console.log("Data: ", data);
             res.json(data);
         })
     }
