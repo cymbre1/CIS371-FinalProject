@@ -15,25 +15,7 @@ const apiUrl = 'http://localhost:3002'
 
 function App() {
   const [userData, setUserData] = React.useState({
-    user: {
-     id: 1,
-     name: "Chase Kinard",
-     pfpref: "pfp/chase-kinard.png"
-   },
-   
-   users: [
-     {
-       id: 1,
-       name: "Chase Kinard",
-       pfpref: "pfp/chase-kinard.png"
-     },
-     {
-       id: 2,
-       name: "Cymbre Spoehr",
-       pfpref: "pfp/cymbre-spoehr.jpg"
-     }
-   ],
-
+   users: [],
    tasks: []
   });
 
@@ -177,6 +159,7 @@ function App() {
   }
 
   React.useEffect(fetchUsers, []);
+  console.log(userData);
   React.useEffect(fetchTasks, []);
 
   const modal = function (state, update, crud) { return { state: state, update: update, crud: crud }; };
@@ -189,7 +172,7 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route path="/login" element={<Login></Login>}></Route>
-      <Route path='/createAccount' element={<CreateAcct></CreateAcct>}></Route>
+      <Route path='/createAccount' element={<CreateAcct setUserData={setUserData} userData={userData} ></CreateAcct>}></Route>
       <Route path="/" element={<PageLayout data={userData} modals={ modals } taskData={taskData} />}>
         <Route path="calendar" element={<Base data={ userData } />}></Route>
         <Route path="taskView" element={<TaskViewBase data={ userData } createTaskModal={ modals.createTaskModal } taskData={taskData} setTaskData={setTaskData} deleteTask={deleteTask} />}></Route>
