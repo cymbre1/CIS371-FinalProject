@@ -16,7 +16,7 @@ function Menu(props) {
     }
 
     return <div id="menu">
-        <MenuUserHeader user={ props.data.user } settingsModal={ props.modals.settingsModal }></MenuUserHeader>
+        <MenuUserHeader user={ props.data.users[props.user - 1] } settingsModal={ props.modals.settingsModal }></MenuUserHeader>
         <hr></hr>
         <MenuButton text="All Tasks" click={ tasks }></MenuButton>
         <hr></hr>
@@ -33,9 +33,10 @@ function MenuUserHeader(props) {
     const settingsModal = () => {
         props.settingsModal.update(true);
     }
+    console.log("MenuUserHeader props: ", props);
     return <div id="menu-header">
-        <img id="menu-user-image" src={ "pfp/cymbre-spoehr.jpg" } alt=""></img>
-        <div id="menu-user-name">{props.user.name}</div>
+        <img id="menu-user-image" src={ props.user.pfpref } alt=""></img>
+        <div id="menu-user-name">{ props.user.name }</div>
         <MenuSettingsButton text="⚙" click={ settingsModal }></MenuSettingsButton>
     </div>
 }

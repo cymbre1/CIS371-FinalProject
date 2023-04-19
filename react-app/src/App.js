@@ -37,6 +37,8 @@ function App() {
    tasks: []
   });
 
+  const [user, setUser] = React.useState("-1");
+
   let fetchTasks = () => {
     fetch(`${apiUrl}/viewTasks?timeout`)
       .then( response => response.json() )
@@ -188,9 +190,9 @@ function App() {
   return (
     <BrowserRouter>
     <Routes>
-      <Route path="/login" element={<Login></Login>}></Route>
+      <Route path="/login" element={<Login setUser={ setUser }></Login>}></Route>
       <Route path='/createAccount' element={<CreateAcct></CreateAcct>}></Route>
-      <Route path="/" element={<PageLayout data={userData} modals={ modals } taskData={taskData} />}>
+      <Route path="/" element={<PageLayout data={userData} modals={ modals } taskData={taskData} user={ user } />}>
         <Route path="calendar" element={<Base data={ userData } />}></Route>
         <Route path="taskView" element={<TaskViewBase data={ userData } createTaskModal={ modals.createTaskModal } taskData={taskData} setTaskData={setTaskData} deleteTask={deleteTask} />}></Route>
       </Route> 
@@ -210,7 +212,7 @@ function PageLayout(props) {
       <LayoutContainer>
         <SettingsModal showModal={ props.modals.settingsModal.state } setShowModal={ props.modals.settingsModal.update }></SettingsModal>
         <CreateTaskModal createTaskModal={props.modals.createTaskModal} taskData={props.taskData} />
-        <Menu data={ props.data } modals={ props.modals }></Menu><Outlet />
+        <Menu data={ props.data } modals={ props.modals } user={ props.user }></Menu><Outlet />
     </LayoutContainer>
     </>
   )

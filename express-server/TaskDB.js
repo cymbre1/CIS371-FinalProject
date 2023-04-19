@@ -67,19 +67,19 @@ class TaskDB {
         TaskDB.allUsers().then((all) => {
             console.log(all);
         });
-            return new Promise((resolve, reject) => {
-                const sql = (`SELECT * from Users WHERE email=?`)
-                this.db.get(sql, [user.username], function(err, row) {
-                    console.log("DATA ", row);
-                    console.log("ERR ", err);
-                    if(user.password === row.password) {
-                        resolve("Success");
-                    } else {
-                        resolve("Invalid");
-                    }
-                });
+        return new Promise((resolve, reject) => {
+            const sql = (`SELECT * from Users WHERE email=?`)
+            this.db.get(sql, [user.username], function(err, row) {
+                console.log("DATA ", row);
+                console.log("ERR ", err);
+                if(user.password === row.password) {
+                    resolve(row.id);
+                } else {
+                    resolve("Invalid");
+                }
             });
-        }
+        });
+    }
         
     static updateTask(task) {
         return new Promise((resolve, reject) => {
