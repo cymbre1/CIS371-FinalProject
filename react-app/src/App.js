@@ -175,7 +175,7 @@ function App() {
     <Routes>
       <Route path="/login" element={<Login setUser={ setUser }></Login>}></Route>
       <Route path='/createAccount' element={<CreateAcct setUserData={setUserData} userData={userData} ></CreateAcct>}></Route>
-      <Route path="/" element={<PageLayout data={userData} modals={ modals } taskData={taskData} />}>
+      <Route path="/" element={<PageLayout data={userData} modals={ modals } taskData={taskData} user={user} />}>
         <Route path="calendar" element={<Base data={ userData } />}></Route>
         <Route path="taskView" element={<TaskViewBase data={ userData } createTaskModal={ modals.createTaskModal } taskData={taskData} setTaskData={setTaskData} deleteTask={deleteTask} />}></Route>
       </Route> 
