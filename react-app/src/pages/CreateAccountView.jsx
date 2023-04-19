@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import {useNavigate} from 'react-router-dom';
+
+const apiUrl = 'http://localhost:3002'
 
 const CreateAcctForm = styled.form `
     background: var(--color-OldLavendar);
@@ -24,29 +27,74 @@ const CreateAcctButton = styled.button `
     border-radius: 0px;
 `;
 
-export const CreateAcct = (() => {
+export const CreateAcct = ((props) => {
+  const navigate = useNavigate();
+
+  const [login, setLogin] = React.useState({name: "", username: "", password: "", confirmPassword: "", file: null});
+
+  function onLogin(event) {
+    event.preventDefault();
+    console.log("Sending in some stuff");
+    fetch(`${apiUrl}/createUser/`, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify({
+        name: login.name,
+        username: login.username,
+        password: login.password,
+        confirmPassword: login.confirmPassword,
+        pfpref: login.file
+      }), // body data type must match "Content-Type" header
+    })
+      .then( response => response.json() )
+      .then( data => {
+        if(data === "Success") {
+          navigate("/taskView");
+        }
+        props.setUserData({...props.userData, users: {...props.userData.users.push(data)}})
+      } )
+      .catch( err => console.error(err) );
+  }
+
     return(
         <CreateAcctForm>
           <div>
             <label>
+              <p>Full Name</p>
+              <input type="text" onChange={e => setLogin({...login, name: e.target.value})}/>
+            </label>
+          </div>
+          <div>
+            <label>
                 <p>Username</p>
-                <input type="text" />
+                <input type="text" onChange={e => setLogin({...login, username: e.target.value})}/>
             </label>
           </div>
           <div>
             <label>
                 <p>Password</p>
-                <input type="password" />
+                <input type="password" onChange={e => setLogin({...login, password: e.target.value})}/>
             </label>
           </div>
           <div>
             <label>
                 <p>Confirm Password</p>
-                <input type="password" />
+                <input type="password" onChange={e => setLogin({...login, confirmPassword: e.target.value})}/>
             </label>
           </div>
           <div>
-            <CreateAcctButton type="submit">Submit</CreateAcctButton>
+            <p>Profile Photo</p>
+            <input type="file" onChange={e => setLogin({...login, file: e.target.value})}></input>
+          </div>
+          <div>
+            <CreateAcctButton type="submit" onClick={(e) => onLogin(e)}>Submit</CreateAcctButton>
           </div>
         </CreateAcctForm>
       )});

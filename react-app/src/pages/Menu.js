@@ -35,7 +35,7 @@ function MenuUserHeader(props) {
     }
     return <div id="menu-header">
         <img id="menu-user-image" src={ "pfp/cymbre-spoehr.jpg" } alt=""></img>
-        <div id="menu-user-name">{props.user.name}</div>
+        <div id="menu-user-name">{"Cymbre Spoehr"}</div>
         <MenuSettingsButton text="⚙" click={ settingsModal }></MenuSettingsButton>
     </div>
 }
