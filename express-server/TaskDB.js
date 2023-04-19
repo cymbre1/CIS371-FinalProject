@@ -5,8 +5,8 @@ class TaskDB {
     static reset() {
         console.log('resetting test DB')
         TaskDB.db = new sqlite3.Database('tasks.test.sqlite');
-        this.db.run('DROP TABLE Tasks');
-        this.db.run('DROP TABLE Users');
+        // this.db.run('DROP TABLE Tasks');
+        // this.db.run('DROP TABLE Users');
         TaskDB.initialize();
     }
 
@@ -20,7 +20,6 @@ class TaskDB {
             this.db.run('INSERT INTO Tasks (name, date, duration, assignedBy, assignedTo) VALUES ("Clean out the fridge", "2023-04-19", "30", "1", "2");');
             this.db.run('INSERT INTO Tasks (name, date, duration, assignedBy, assignedTo) VALUES ("Sweep the basement", "2023-04-20", "60", "2", "1");');
             this.db.run('INSERT INTO Tasks (name, date, duration, assignedBy, assignedTo) VALUES ("Organize the garage", "2023-04-21", "120", "2", "1");');
-
         })
 
     }
@@ -44,7 +43,7 @@ class TaskDB {
 
     static insertTask(task) {
         return new Promise((resolve, reject) => {
-            this.db.run(`INSERT INTO Tasks (name, date, duration, assignedBy, assignedTo) VALUES ("${task.name}", "${task.date}", "${task.duration}", "1", "1")`, function(err, data) {
+            this.db.run(`INSERT INTO Tasks (name, date, duration, assignedBy, assignedTo) VALUES ("${task.name}", "${task.date}", "${task.duration}", "1", "1");`, function(err, data) {
                 task.id = this.lastID;
                 task.assignedBy = 1;
                 task.assignedTo = 1;
@@ -55,13 +54,17 @@ class TaskDB {
 
     static insertUser(user) {
         return new Promise((resolve, reject) => {
-            this.db.run(`INSERT INTO Users ( name, email, password, pfpref) VALUES ("${user.id}", "${user.name}", "${user.email}", "${user.password}")`, function(err, data) {
-                user.pk = this.lastID;
-                resolve("Success")
+            console.log(user);
+            if(user.password !== user.confirmPassword || user.name === "" || user.email === "") {
+                resolve("Invalid Information");
+            }
+
+            this.db.run(`INSERT INTO Users ( name, email, password, pfpref) VALUES ("${user.name}", "${user.username}", "${user.password}", "${user.pfpref}");`, function(err, data) {
+                user.id = this.lastID;
+                resolve("Success");
             })
         })
     }
-    //WHERE email="${user.username}"
 
     static validateUser(user) {
         TaskDB.allUsers().then((all) => {

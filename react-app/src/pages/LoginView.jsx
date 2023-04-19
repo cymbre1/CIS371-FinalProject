@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom';
 
 const apiUrl = 'http://localhost:3002'
 
@@ -32,7 +32,7 @@ export const Login = ((props) => {
 
     const [login, setLogin] = React.useState({username: "", password: ""});
 
-    function onEdit(event) {
+    function onLogin(event) {
       event.preventDefault();
       console.log("Sending in some stuff");
       fetch(`${apiUrl}/login/`, {
@@ -83,7 +83,7 @@ export const Login = ((props) => {
             </label>
           </div>
           <div>
-            <LoginButton type="submit" onClick={e => onEdit(e)}>Submit </LoginButton> 
+            <LoginButton type="submit" onClick={e => onLogin(e)}>Submit </LoginButton> 
             <LoginButton onClick={createNewAccount}>Create Account</LoginButton>
           </div>
         </LoginForm>
