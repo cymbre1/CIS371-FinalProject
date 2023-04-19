@@ -7,13 +7,10 @@ import { useState } from "react";
 /* Base */
 function Base(props) {
     const [events, setEvents] = useState(props.data.tasks.map((task, index) => ({
-        title: task.name, date: `2023-04-0${index}`
+        title: task.name, date: task.date
     })));
-    // var tasks  = [];
 
-    // for(var task in props.data.tasks) {
-    //     events.push({title: props.data.tasks[task].name, date: `2023-04-0${task}`});
-    // }
+    console.log("EVENTS ", events);
 
     return <>
         <FullCalendar

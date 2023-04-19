@@ -12,10 +12,6 @@ class TaskDB {
 
     static initialize() {
         this.db.serialize(() => {
-            // this.db.run('CREATE TABLE Bugs (id INTEGER PRIMARY KEY, title TEXT NOT NULL, description TEXT NOT NULL, type TEXT NOT NULL, priority TEXT NOT NULL, status TEXT NOT NULL);')
-            // this.db.run('INSERT INTO Bugs (title, description, type, priority, status) VALUES ("Add something", "I would like a new feature", "feature", "high", "open");')
-            // this.db.run('INSERT INTO Bugs (title, description, type, priority, status) VALUES ("Fix a problem", "It does not work", "bug", "low", "open");')
-
             this.db.run('CREATE TABLE Users (id INTEGER PRIMARY KEY, name TEXT NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL, pfpref TEXT NOT NULL);');
             this.db.run('INSERT INTO Users ( name, email, password, pfpref) VALUES ("Cymbre Spoehr", "scottcym@mail.gvsu.edu", "password123", "pfp/cymbre-spoehr.jpg" );');
             this.db.run('INSERT INTO Users ( name, email, password, pfpref) VALUES ("Chase Kinard", "kinardc@mail.gvsu.edu", "testPassword!", "pfp/chase-kinard.png");');
@@ -59,13 +55,32 @@ class TaskDB {
 
     static insertUser(user) {
         return new Promise((resolve, reject) => {
-            this.db.run(`INSERT INTO Users (id, title, user, rating) VALUES ("${user.id}", "${user.name}", "${user.email}", "${user.password}")`, function(err, data) {
+            this.db.run(`INSERT INTO Users ( name, email, password, pfpref) VALUES ("${user.id}", "${user.name}", "${user.email}", "${user.password}")`, function(err, data) {
                 user.pk = this.lastID;
-                resolve(user)
+                resolve("Success")
             })
         })
     }
+    //WHERE email="${user.username}"
 
+    static validateUser(user) {
+        TaskDB.allUsers().then((all) => {
+            console.log(all);
+        });
+            return new Promise((resolve, reject) => {
+                const sql = (`SELECT * from Users WHERE email=?`)
+                this.db.get(sql, [user.username], function(err, row) {
+                    console.log("DATA ", row);
+                    console.log("ERR ", err);
+                    if(user.password === row.password) {
+                        resolve("Success");
+                    } else {
+                        resolve("Invalid");
+                    }
+                });
+            });
+        }
+        
     static updateTask(task) {
         return new Promise((resolve, reject) => {
             const sql = `UPDATE Tasks SET name="${task.name}", date="${task.date}", duration="${task.duration}", assignedBy="${task.assignedBy}", assignedTo="${task.assignedTo}" where id="${task.id}"`
@@ -86,7 +101,7 @@ class TaskDB {
 
     static deleteTask(task) {
         console.log(task)
-        return new Promise((reslve, reject) => {
+        return new Promise((resolve, reject) => {
             const sql = `DELETE From Tasks WHERE id=${task.id};`
             this.db.run(sql, function(err, data) {   
                 if (err != null) {
@@ -95,7 +110,7 @@ class TaskDB {
                     console.log(err);
                     reject({message: err});
                 } else if (this.changes === 1) {
-                    reslve("Success");
+                    resolve("Success");
                 } else {
                     reject("Unknown problem.  There were " + this.changes + "changes.");
                 }
