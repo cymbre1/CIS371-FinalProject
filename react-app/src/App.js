@@ -19,7 +19,7 @@ function App() {
    tasks: []
   });
 
-  const [user, setUser] = React.useState("-1");
+  const [user, setUser] = React.useState();
 
   let fetchTasks = () => {
     fetch(`${apiUrl}/viewTasks?timeout`)

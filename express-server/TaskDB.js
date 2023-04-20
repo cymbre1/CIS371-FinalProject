@@ -4,9 +4,9 @@ class TaskDB {
 
     static reset() {
         console.log('resetting test DB')
-        TaskDB.db = new sqlite3.Database('tasks.test.sqlite');
-        this.db.run('DROP TABLE Tasks');
-        this.db.run('DROP TABLE Users');
+        TaskDB.db = new sqlite3.Database('tasks.sqlite');
+        this.db.run('DROP TABLE IF EXISTS Tasks');
+        this.db.run('DROP TABLE IF EXISTS Users');
         TaskDB.initialize();
     }
 
@@ -73,12 +73,11 @@ class TaskDB {
         return new Promise((resolve, reject) => {
             const sql = (`SELECT * from Users WHERE email=?`)
             this.db.get(sql, [user.username], function(err, row) {
-                console.log("DATA ", row);
-                console.log("ERR ", err);
+                console.error(err);
                 if(user.password === row.password) {
                     resolve(row.id);
                 } else {
-                    resolve("Invalid");
+                    resolve(undefined);
                 }
             });
         });
@@ -89,9 +88,7 @@ class TaskDB {
             const sql = `UPDATE Tasks SET name="${task.name}", date="${task.date}", duration="${task.duration}", assignedBy="${task.assignedBy}", assignedTo="${task.assignedTo}" where id="${task.id}"`
             this.db.run(sql, function(err, data) {   
                 if (err != null) {
-                    console.log("Error updating ");
-                    console.log(task);
-                    console.log(err);
+                    console.error(err)
                     reject({message: err})
                 } else if (this.changes === 1) {
                     resolve(task)
@@ -108,9 +105,7 @@ class TaskDB {
             const sql = `DELETE From Tasks WHERE id=${task.id};`
             this.db.run(sql, function(err, data) {   
                 if (err != null) {
-                    console.log("Error updating ");
-                    console.log(task);
-                    console.log(err);
+                    console.error(err);
                     reject({message: err});
                 } else if (this.changes === 1) {
                     resolve("Success");

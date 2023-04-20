@@ -1,8 +1,10 @@
-const express = require('express')
-const TaskDB = require('./TaskDB')
+const express = require('express');
+// const Session = require('express-session');
+// const CookieParser = require('cookie-parser');
+const TaskDB = require('./TaskDB');
 
-const app = express()
-const port = 3002  // so we don't conflict with React on 3001
+const app = express();
+const port = 3002;  // so we don't conflict with React on 3001
 
 // Tell Express to parse the body as JSON.
 // (This is a different format than data sent by an HTML form.)
