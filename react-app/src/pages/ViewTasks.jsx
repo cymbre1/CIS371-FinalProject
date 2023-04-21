@@ -46,8 +46,8 @@ function Task(props) {
                 </div>
             </div>
             <div class="task-stats">
-                <div class="taskText">Duration: {props.task.duration}</div>
-                <div class="taskText">Date: {props.task.date}</div>
+                <div class="taskText">{`Duration: ${props.task.duration}`}</div>
+                <div class="taskText">{`Date: ${props.task.date}`}</div>
             </div>
             <div class="task-operations">
                 <div class="created-by-info">
