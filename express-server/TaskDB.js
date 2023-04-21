@@ -73,6 +73,10 @@ class TaskDB {
         return new Promise((resolve, reject) => {
             const sql = (`SELECT * from Users WHERE email=?`)
             this.db.get(sql, [user.username], function(err, row) {
+                if(typeof row === 'undefined') {
+                    reject("Bad Login");
+                    return;
+                }
                 console.log("DATA ", row);
                 console.log("ERR ", err);
                 if(user.password === row.password) {
@@ -80,7 +84,7 @@ class TaskDB {
                 } else {
                     resolve("Invalid");
                 }
-            });
+            })
         });
     }
         
