@@ -4,55 +4,69 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction';
 import { useState } from "react";
 
+const apiUrl = 'http://localhost:3002'
+
 /* Base */
 function Base(props) {
-    const [events, setEvents] = useState(props.data.tasks.map((task, index) => ({
-        title: task.name, date: task.date
-    })));
 
-    console.log("EVENTS ", events);
+    function onEdit(task, date) {
+        // event.preventDefault();
+        fetch(`${apiUrl}/editTask/${task.id}`, {
+          method: "POST", // *GET, POST, PUT, DELETE, etc.
+          mode: "cors", // no-cors, *cors, same-origin
+          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: "same-origin", // include, *same-origin, omit
+          headers: {
+            "Content-Type": "application/json",
+          },
+          redirect: "follow", // manual, *follow, error
+          referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+          body: JSON.stringify({
+            id: task.id,
+            title: task.title,
+            date: date,
+            duration: task.duration * task.durationMultiplier,
+            assignedBy: 1,
+            assignedTo: 1
+          }), // body data type must match "Content-Type" header
+        })
+          .then( response => response.json() )
+          .then( data => {
+            props.setUserData( userData => ({ ...props.userData, tasks: props.userData.tasks.reduce((partial, item) => {
+              return partial.concat(item.id === task.id ? data : item);
+            }, []) }) ) 
+          })
+          .catch( err => console.error(err) );
+      }
+
+    console.log("EVENTS ", props.userData);
 
     return <>
         <FullCalendar
         editable="true"
         plugins={[ dayGridPlugin, interactionPlugin ]}
-        dateClick={(arg) => {
-            console.log(arg)
-            var hasEvent = false;
-            var newEvents = []
-            events.forEach((element) => {
-                if(element.date === arg.dateStr && element.title === `Busy`) {
-                    hasEvent = true;
-                } else if(element.date === arg.dateStr && element.title !== `Busy`){ 
-                    hasEvent = true;
-                    newEvents.push(element);
-                } else {
-                    newEvents.push(element);
-                }
-            });
-            if(!hasEvent) {
-                setEvents([...events, { title: `Busy`, date: arg.dateStr }]);
-            } else {
-                setEvents(newEvents);
-            }
-        }}
-        events={events}
+        events={props.userData.tasks}
         selectable="true"
         droppable={"true"}
         eventDrop={(date) => {
-            console.log(date.event)
-            // info.event.setDates
-            console.log("Do something here to set the data of the task")
+            let task = {};
+
+            props.userData.tasks.forEach(e => {
+                if(e.title === date.event.title) {
+                    task = e;
+                }
+            });
+
+            onEdit(task, date.event.startStr);
         }}   
-        // eventChange={(blah) => {console.log(blah.event)}}
          /> </>
 }
 
 /* Left Menu */
 function MenuUserHeader(props) {
     return <div id="menu-header">
-        {/* <img id="menu-user-image" src={props.user.pfpref}></img> */}
-        {/* <div id="menu-user-name">{props.user.name}</div> */}
+        <img id="menu-user-image" src={props.user.pfpref}></img> 
+        <div id="menu-user-name">{props.user.title}</div>
     </div>
 }
 
