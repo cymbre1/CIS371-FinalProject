@@ -52,7 +52,7 @@ export const Login = ((props) => {
       })
         .then( response => response.json() )
         .then( data => {
-          if(data !== "Invalid") {
+          if(data != undefined) {
             console.log("loginView data: ", data);
             props.setUser(data);
             navigate("/taskView");
