@@ -138,6 +138,7 @@ function App() {
     })
       .then( response => response.json() )
       .then( data => setUserData( userData => ({ ...userData,  tasks: userData.tasks.reduce((partial, item) => {
+        console.log("Hi");
         return item.id !== id ? partial.concat(item) : partial;
       }, []) }) ) )
       .catch( err => console.error(err) );
