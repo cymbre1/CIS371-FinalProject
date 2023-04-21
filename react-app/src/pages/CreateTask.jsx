@@ -3,7 +3,7 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import styled from 'styled-components';
-import { MdClose } from 'react-icons/md';
+import { MdClose, MdFaceRetouchingNatural } from 'react-icons/md';
 
 /* Dim behind modal. */
 const Background = styled.div`
@@ -117,8 +117,12 @@ export const CreateTaskModal = (props) => {
         [keyPress]
     );
 
-    console.log("DATE")
-    console.log(props.taskData)
+    console.log(props.userData);
+
+    let namesAsHTML = props.userData.users.map((value) => {
+        console.log("VAL", value);
+        return <option>{value.name}</option>;
+    })
 
     return (
         <>
@@ -144,6 +148,10 @@ export const CreateTaskModal = (props) => {
                                     <option value="1" selected>Minutes</option>
                                     <option value="60">Hours</option>
                                 </select>
+                            </div>
+                            <div>
+                                <label for="assignTo">Assign To: </label>
+                                <select id="assignTo" onChange={e => onChange({assignedTo: e.target.selectedIndex + 1})}>{namesAsHTML}</select>
                             </div>
                             <div>
                                 <button  id="cancel" type="button" onClick={e => onCancel(e)}>Cancel</button>
