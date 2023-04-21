@@ -47,14 +47,12 @@ export const Login = ((props) => {
         referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
         body: JSON.stringify({
           username: login.username,
-          password: login.password,
-          assignedBy: 1,
-          assignedTo: 1
+          password: login.password
         }), // body data type must match "Content-Type" header
       })
         .then( response => response.json() )
         .then( data => {
-          if(data != "Invalid") {
+          if(data !== "Invalid") {
             console.log("loginView data: ", data);
             props.setUser(data);
             navigate("/taskView");

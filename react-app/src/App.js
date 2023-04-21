@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import {BrowserRouter, Outlet, Route, Routes} from 'react-router-dom'
+import {BrowserRouter, Outlet, Route, Routes, useNavigate} from 'react-router-dom'
 import { Base } from './pages/CalendarView';
 import { TaskViewBase } from './pages/ViewTasks';
 import {Menu} from './pages/Menu';
@@ -26,7 +26,6 @@ function App() {
       .then( response => response.json() )
       .then( data => {
         setUserData(userData => ({ ...userData, tasks: data }));
-        console.log("fetchTasks: ", data);
       } )
       .catch( err => console.error(err) );
   };
@@ -59,7 +58,6 @@ function App() {
   function submit(event) {
     event.preventDefault();
     modals.createTaskModal.update(false);
-    console.log("submit: ", taskData);
     fetch(`${apiUrl}/postTask`, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -106,7 +104,6 @@ function App() {
     })
       .then( response => response.json() )
       .then( data => setUserData( userData => ({ ...userData, tasks: userData.tasks.reduce((partial, item) => {
-        console.log("partial", partial);
         return partial.concat(item.id === taskData.id ? data : item);
       }, []) }) ) )
       .catch( err => console.error(err) );
@@ -114,7 +111,6 @@ function App() {
   }
 
   function deleteTask(event, id) {
-    console.log("ID", id);
     event.preventDefault();
     fetch(`${apiUrl}/deleteTask/${id}`, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -137,7 +133,6 @@ function App() {
     })
       .then( response => response.json() )
       .then( data => setUserData( userData => ({ ...userData,  tasks: userData.tasks.reduce((partial, item) => {
-        console.log("partial", partial);
         return item.id !== id ? partial.concat(item) : partial;
       }, []) }) ) )
       .catch( err => console.error(err) );
@@ -149,19 +144,16 @@ function App() {
       ...taskData,
       ...formData
     });
-    console.log("updateFormData: ", taskData);
   }
 
   function cancel(event) {
     event.preventDefault();
     setTaskData({ defaultTaskData });
     modals.createTaskModal.update(false);
-    console.log("cancel: ", taskData);
     // setTaskData(defaultTaskData);
   }
 
   React.useEffect(fetchUsers, []);
-  console.log(userData);
   React.useEffect(fetchTasks, []);
 
   const modal = function (state, update, crud) { return { state: state, update: update, crud: crud }; };
@@ -174,8 +166,8 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route path="/login" element={<Login setUser={ setUser }></Login>}></Route>
-      <Route path='/createAccount' element={<CreateAcct setUserData={setUserData} userData={userData} ></CreateAcct>}></Route>
-      <Route path="/" element={<PageLayout data={userData} modals={ modals } taskData={taskData} user={user} />}>
+      <Route path='/createAccount' element={<CreateAcct setUserData={setUserData} userData={userData} setUser={setUser} ></CreateAcct>}></Route>
+      <Route path="/" element={<PageLayout data={userData} modals={ modals } taskData={taskData} user={user} userData={userData} setUserData={setUserData} />}>
         <Route path="calendar" element={<Base data={ userData } />}></Route>
         <Route path="taskView" element={<TaskViewBase data={ userData } createTaskModal={ modals.createTaskModal } taskData={taskData} setTaskData={setTaskData} deleteTask={deleteTask} />}></Route>
       </Route> 
@@ -190,10 +182,17 @@ const LayoutContainer = styled.div `
 `
 
 function PageLayout(props) {
+  const navigate = useNavigate()
+  if(props.user === "-1")
+  {
+    navigate("/login");
+    return;
+  }
+
   return (
     <>
       <LayoutContainer>
-        <SettingsModal showModal={ props.modals.settingsModal.state } setShowModal={ props.modals.settingsModal.update }></SettingsModal>
+        <SettingsModal showModal={ props.modals.settingsModal.state } setShowModal={ props.modals.settingsModal.update } user={props.user} setUser={props.setUser} userData={props.userData} setUserData={props.setUserData}></SettingsModal>
         <CreateTaskModal createTaskModal={props.modals.createTaskModal} taskData={props.taskData} />
         <Menu data={ props.data } modals={ props.modals } user={ props.user }></Menu><Outlet />
     </LayoutContainer>

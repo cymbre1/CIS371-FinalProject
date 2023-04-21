@@ -56,12 +56,12 @@ class TaskDB {
         return new Promise((resolve, reject) => {
             console.log(user);
             if(user.password !== user.confirmPassword || user.name === "" || user.email === "") {
-                resolve("Invalid Information");
+                resolve("Invalid");
             }
 
             this.db.run(`INSERT INTO Users ( name, email, password, pfpref) VALUES ("${user.name}", "${user.username}", "${user.password}", "${user.pfpref}");`, function(err, data) {
                 user.id = this.lastID;
-                resolve("Success");
+                resolve(user);
             })
         })
     }
@@ -98,6 +98,16 @@ class TaskDB {
                 } else {
                     reject("Unknown problem.  There were " + this.changes + "changes.")
                 }
+            })
+        })
+    }
+
+    static updateUser(user, id) {
+        return new Promise((resolve, reject) => {
+            const sql = `UPDATE Users SET name="${user.name}", email="${user.email}", password="${user.password}" where id="${id}"`
+            this.db.run(sql, function(err, data) {
+                console.log(err);
+                resolve(user)
             })
         })
     }
