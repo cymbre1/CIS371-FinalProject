@@ -39,7 +39,7 @@ function Task(props) {
 
     return <div class="task">
             <div class="task-info" id="task-name">
-                <div class="task-title">{props.task.name}</div>
+                <div class="task-title">{props.task.title}</div>
                 <div class="assignedBy-info">
                     <img id="task-user-image" src={"pfp/cymbre-spoehr.jpg"} alt=""></img>
                     <div class="image-words">{"Cymbre Spoehr"}</div>

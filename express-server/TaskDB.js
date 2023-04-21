@@ -5,8 +5,8 @@ class TaskDB {
     static reset() {
         console.log('resetting test DB')
         TaskDB.db = new sqlite3.Database('tasks.test.sqlite');
-        this.db.run('DROP TABLE Tasks');
-        this.db.run('DROP TABLE Users');
+        this.db.run('DROP TABLE IF EXISTS Tasks');
+        this.db.run('DROP TABLE IF EXISTS Users');
         TaskDB.initialize();
     }
 
@@ -16,10 +16,10 @@ class TaskDB {
             this.db.run('INSERT INTO Users ( name, email, password, pfpref) VALUES ("Cymbre Spoehr", "scottcym@mail.gvsu.edu", "password123", "pfp/cymbre-spoehr.jpg" );');
             this.db.run('INSERT INTO Users ( name, email, password, pfpref) VALUES ("Chase Kinard", "kinardc@mail.gvsu.edu", "testPassword!", "pfp/chase-kinard.png");');
 
-            this.db.run('CREATE TABLE Tasks (id INTEGER PRIMARY KEY, name TEXT NOT NULL, date TEXT NOT NULL, duration INTEGER NOT NULL, assignedBy INTEGER, assignedTo INTEGER);');
-            this.db.run('INSERT INTO Tasks (name, date, duration, assignedBy, assignedTo) VALUES ("Clean out the fridge", "2023-04-19", "30", "1", "2");');
-            this.db.run('INSERT INTO Tasks (name, date, duration, assignedBy, assignedTo) VALUES ("Sweep the basement", "2023-04-20", "60", "2", "1");');
-            this.db.run('INSERT INTO Tasks (name, date, duration, assignedBy, assignedTo) VALUES ("Organize the garage", "2023-04-21", "120", "2", "1");');
+            this.db.run('CREATE TABLE Tasks (id INTEGER PRIMARY KEY, title TEXT NOT NULL, date TEXT NOT NULL, duration INTEGER NOT NULL, assignedBy INTEGER, assignedTo INTEGER);');
+            this.db.run('INSERT INTO Tasks (title, date, duration, assignedBy, assignedTo) VALUES ("Clean out the fridge", "2023-04-19", "30", "1", "2");');
+            this.db.run('INSERT INTO Tasks (title, date, duration, assignedBy, assignedTo) VALUES ("Sweep the basement", "2023-04-20", "60", "2", "1");');
+            this.db.run('INSERT INTO Tasks (title, date, duration, assignedBy, assignedTo) VALUES ("Organize the garage", "2023-04-21", "120", "2", "1");');
         })
 
     }
@@ -43,7 +43,7 @@ class TaskDB {
 
     static insertTask(task) {
         return new Promise((resolve, reject) => {
-            this.db.run(`INSERT INTO Tasks (name, date, duration, assignedBy, assignedTo) VALUES ("${task.name}", "${task.date}", "${task.duration}", "1", "1");`, function(err, data) {
+            this.db.run(`INSERT INTO Tasks (title, date, duration, assignedBy, assignedTo) VALUES ("${task.title}", "${task.date}", "${task.duration}", "1", "1");`, function(err, data) {
                 task.id = this.lastID;
                 task.assignedBy = 1;
                 task.assignedTo = 1;
@@ -73,6 +73,10 @@ class TaskDB {
         return new Promise((resolve, reject) => {
             const sql = (`SELECT * from Users WHERE email=?`)
             this.db.get(sql, [user.username], function(err, row) {
+                if(typeof row === 'undefined') {
+                    reject("Bad Login");
+                    return;
+                }
                 console.log("DATA ", row);
                 console.log("ERR ", err);
                 if(user.password === row.password) {
@@ -80,13 +84,13 @@ class TaskDB {
                 } else {
                     resolve("Invalid");
                 }
-            });
+            })
         });
     }
         
     static updateTask(task) {
         return new Promise((resolve, reject) => {
-            const sql = `UPDATE Tasks SET name="${task.name}", date="${task.date}", duration="${task.duration}", assignedBy="${task.assignedBy}", assignedTo="${task.assignedTo}" where id="${task.id}"`
+            const sql = `UPDATE Tasks SET title="${task.title}", date="${task.date}", duration="${task.duration}", assignedBy="${task.assignedBy}", assignedTo="${task.assignedTo}" where id="${task.id}"`
             this.db.run(sql, function(err, data) {   
                 if (err != null) {
                     console.log("Error updating ");
@@ -104,7 +108,7 @@ class TaskDB {
 
     static updateUser(user, id) {
         return new Promise((resolve, reject) => {
-            const sql = `UPDATE Users SET name="${user.name}", email="${user.email}", password="${user.password}" where id="${id}"`
+            const sql = `UPDATE Users SET title="${user.title}", email="${user.email}", password="${user.password}" where id="${id}"`
             this.db.run(sql, function(err, data) {
                 console.log(err);
                 resolve(user)

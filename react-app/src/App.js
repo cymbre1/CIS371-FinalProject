@@ -46,15 +46,13 @@ function App() {
 
   const defaultTaskData = {
     id: undefined,
-    name: undefined,
+    title: undefined,
     date: undefined,
     duration: undefined,
     durationMultiplier: "1"
   };
   const [taskData, setTaskData] = React.useState(defaultTaskData);
 
-  // const [editing, setEditing] = React.useState();
-  
   function submit(event) {
     event.preventDefault();
     modals.createTaskModal.update(false);
@@ -69,13 +67,15 @@ function App() {
       redirect: "follow", // manual, *follow, error
       referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
       body: JSON.stringify({
-        name: taskData.name,
+        title: taskData.title,
         date: taskData.date,
         duration: taskData.duration * taskData.durationMultiplier
       }), // body data type must match "Content-Type" header
     })
       .then( response => response.json() )
-      .then( data => setUserData( userData => ({ ...userData, tasks: [ ...userData.tasks, data ] }) ) )
+      .then( data => {
+        setUserData( userData => ({ ...userData, tasks: [ ...userData.tasks, data ] }) ) 
+      } )
       .catch( err => console.error(err) );
       setTaskData(defaultTaskData);
     }
@@ -95,7 +95,7 @@ function App() {
       referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
       body: JSON.stringify({
         id: taskData.id,
-        name: taskData.name,
+        title: taskData.title,
         date: taskData.date,
         duration: taskData.duration * taskData.durationMultiplier,
         assignedBy: 1,
@@ -103,9 +103,11 @@ function App() {
       }), // body data type must match "Content-Type" header
     })
       .then( response => response.json() )
-      .then( data => setUserData( userData => ({ ...userData, tasks: userData.tasks.reduce((partial, item) => {
-        return partial.concat(item.id === taskData.id ? data : item);
-      }, []) }) ) )
+      .then( data => {
+        setUserData( userData => ({ ...userData, tasks: userData.tasks.reduce((partial, item) => {
+          return partial.concat(item.id === taskData.id ? data : item);
+        }, []) }) ) 
+      })
       .catch( err => console.error(err) );
       setTaskData(defaultTaskData);
   }
@@ -124,7 +126,7 @@ function App() {
       referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
       body: JSON.stringify({
         id: id,
-        name: "",
+        title: "",
         date: "",
         duration: taskData.duration * taskData.durationMultiplier,
         assignedBy: 1,
@@ -150,7 +152,6 @@ function App() {
     event.preventDefault();
     setTaskData({ defaultTaskData });
     modals.createTaskModal.update(false);
-    // setTaskData(defaultTaskData);
   }
 
   React.useEffect(fetchUsers, []);
@@ -168,7 +169,7 @@ function App() {
       <Route path="/login" element={<Login setUser={ setUser }></Login>}></Route>
       <Route path='/createAccount' element={<CreateAcct setUserData={setUserData} userData={userData} setUser={setUser} ></CreateAcct>}></Route>
       <Route path="/" element={<PageLayout data={userData} modals={ modals } taskData={taskData} user={user} userData={userData} setUserData={setUserData} />}>
-        <Route path="calendar" element={<Base data={ userData } />}></Route>
+        <Route path="calendar" element={<Base userData={ userData } setUserData={setUserData} onEdit={modals.createTaskModal.crud.onEdit} setTaskData={setTaskData} />}></Route>
         <Route path="taskView" element={<TaskViewBase data={ userData } createTaskModal={ modals.createTaskModal } taskData={taskData} setTaskData={setTaskData} deleteTask={deleteTask} />}></Route>
       </Route> 
     </Routes>
