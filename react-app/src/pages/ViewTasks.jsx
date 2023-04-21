@@ -32,6 +32,7 @@ function Task(props) {
     }
 
     const deleteTask = e => {
+        console.log("DELETE")
         props.setTaskData(props.task);
         props.deleteTask(e, props.task.id);
     }
