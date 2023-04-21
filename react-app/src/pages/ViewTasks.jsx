@@ -4,7 +4,7 @@ import React from 'react'
 
 function TaskViewBase(props) {
     return <>
-        <TaskList showModal={props.createTaskModal.state} setShowModal={props.createTaskModal.update} id="tasklist" data={props.data} setTaskData={props.setTaskData} deleteTask={props.deleteTask} ></TaskList>
+        <TaskList showModal={props.createTaskModal.state} setShowModal={props.createTaskModal.update} id="tasklist" data={props.data} setTaskData={props.setTaskData} deleteTask={props.deleteTask} user={props.user} ></TaskList>
     </>
 }
 
@@ -16,7 +16,7 @@ function TaskList(props) {
 
     console.log("TaskList: ", props.data.tasks);
     const tasks = props.data.tasks.map((i, index) =>
-        <Task task={i} users={props.data.users} setTaskData={props.setTaskData} setShowModal={props.setShowModal} deleteTask={props.deleteTask} />
+        <Task task={i} users={props.data.users} setTaskData={props.setTaskData} setShowModal={props.setShowModal} deleteTask={props.deleteTask} user={props.user} />
     );
 
     tasks.unshift(<div id="top-bar"><div class='title'>Tasks</div><button class="add-task-button" onClick={addTaskButton}><FontAwesomeIcon icon={faPlus} size="xl" inverse/></button></div>)
@@ -32,17 +32,18 @@ function Task(props) {
     }
 
     const deleteTask = e => {
-        console.log("TASK ", props.task);
         props.setTaskData(props.task);
         props.deleteTask(e, props.task.id);
     }
+
+    console.log("REF", props.task.assignedTo)
 
     return <div class="task">
             <div class="task-info" id="task-name">
                 <div class="task-title">{props.task.title}</div>
                 <div class="assignedBy-info">
-                    <img id="task-user-image" src={"pfp/cymbre-spoehr.jpg"} alt=""></img>
-                    <div class="image-words">{"Cymbre Spoehr"}</div>
+                    <img id="task-user-image" src={props.users[props.task.assignedTo - 1].pfpref} alt=""></img>
+                    <div class="image-words">{props.users[props.task.assignedTo - 1].name}</div>
                 </div>
             </div>
             <div class="task-stats">
@@ -52,7 +53,7 @@ function Task(props) {
             <div class="task-operations">
                 <div class="created-by-info">
                     <div class="image-words">Created By</div>
-                    <img id="task-user-image" src={"pfp/cymbre-spoehr.jpg"} alt=""></img>
+                    <img id="task-user-image" src={props.users[props.task.assignedBy - 1].pfpref} alt=""></img>
                 </div>
                 <div>
                     <button class="crud-button" onClick={ e => deleteTask(e) }><FontAwesomeIcon icon={faTrash} size="xl" inverse/></button>
