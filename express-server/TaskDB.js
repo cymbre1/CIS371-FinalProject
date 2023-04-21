@@ -43,10 +43,8 @@ class TaskDB {
 
     static insertTask(task) {
         return new Promise((resolve, reject) => {
-            this.db.run(`INSERT INTO Tasks (title, date, duration, assignedBy, assignedTo) VALUES ("${task.title}", "${task.date}", "${task.duration}", "1", "1");`, function(err, data) {
+            this.db.run(`INSERT INTO Tasks (title, date, duration, assignedBy, assignedTo) VALUES ("${task.title}", "${task.date}", "${task.duration}", "${task.assignedBy}", "${task.assignedTo}");`, function(err, data) {
                 task.id = this.lastID;
-                task.assignedBy = 1;
-                task.assignedTo = 1;
                 resolve(task)
             })
         })

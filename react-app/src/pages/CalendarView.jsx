@@ -26,8 +26,8 @@ function Base(props) {
             title: task.title,
             date: date,
             duration: task.duration * task.durationMultiplier,
-            assignedBy: 1,
-            assignedTo: 1
+            assignedBy: task.assignedBy,
+            assignedTo: task.assignedTo
           }), // body data type must match "Content-Type" header
         })
           .then( response => response.json() )

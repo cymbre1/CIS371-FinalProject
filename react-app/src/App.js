@@ -49,11 +49,14 @@ function App() {
     title: undefined,
     date: undefined,
     duration: undefined,
-    durationMultiplier: "1"
+    durationMultiplier: "1",
+    assignedBy: 1,
+    assignedTo: 2
   };
   const [taskData, setTaskData] = React.useState(defaultTaskData);
 
   function submit(event) {
+    console.log("ASSIGNED TO ",  taskData.assignedTo)
     event.preventDefault();
     modals.createTaskModal.update(false);
     fetch(`${apiUrl}/postTask`, {
@@ -69,7 +72,9 @@ function App() {
       body: JSON.stringify({
         title: taskData.title,
         date: taskData.date,
-        duration: taskData.duration * taskData.durationMultiplier
+        duration: taskData.duration * taskData.durationMultiplier,
+        assignedBy: user,
+        assignedTo: taskData.assignedTo
       }), // body data type must match "Content-Type" header
     })
       .then( response => response.json() )
@@ -98,8 +103,8 @@ function App() {
         title: taskData.title,
         date: taskData.date,
         duration: taskData.duration * taskData.durationMultiplier,
-        assignedBy: 1,
-        assignedTo: 1
+        assignedBy: user,
+        assignedTo: taskData.assignedTo
       }), // body data type must match "Content-Type" header
     })
       .then( response => response.json() )
@@ -129,8 +134,6 @@ function App() {
         title: "",
         date: "",
         duration: taskData.duration * taskData.durationMultiplier,
-        assignedBy: 1,
-        assignedTo: 1
       }), // body data type must match "Content-Type" header
     })
       .then( response => response.json() )
@@ -170,7 +173,7 @@ function App() {
       <Route path='/createAccount' element={<CreateAcct setUserData={setUserData} userData={userData} setUser={setUser} ></CreateAcct>}></Route>
       <Route path="/" element={<PageLayout data={userData} modals={ modals } taskData={taskData} user={user} userData={userData} setUserData={setUserData} />}>
         <Route path="calendar" element={<Base userData={ userData } setUserData={setUserData} onEdit={modals.createTaskModal.crud.onEdit} setTaskData={setTaskData} />}></Route>
-        <Route path="taskView" element={<TaskViewBase data={ userData } createTaskModal={ modals.createTaskModal } taskData={taskData} setTaskData={setTaskData} deleteTask={deleteTask} />}></Route>
+        <Route path="taskView" element={<TaskViewBase data={ userData } createTaskModal={ modals.createTaskModal } taskData={taskData} setTaskData={setTaskData} deleteTask={deleteTask} user={user} />}></Route>
       </Route> 
     </Routes>
     </BrowserRouter>
@@ -194,7 +197,7 @@ function PageLayout(props) {
     <>
       <LayoutContainer>
         <SettingsModal showModal={ props.modals.settingsModal.state } setShowModal={ props.modals.settingsModal.update } user={props.user} setUser={props.setUser} userData={props.userData} setUserData={props.setUserData}></SettingsModal>
-        <CreateTaskModal createTaskModal={props.modals.createTaskModal} taskData={props.taskData} />
+        <CreateTaskModal createTaskModal={props.modals.createTaskModal} taskData={props.taskData} userData={props.userData} />
         <Menu data={ props.data } modals={ props.modals } user={ props.user }></Menu><Outlet />
     </LayoutContainer>
     </>
