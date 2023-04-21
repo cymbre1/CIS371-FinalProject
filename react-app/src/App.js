@@ -163,7 +163,7 @@ function App() {
   const modal = function (state, update, crud) { return { state: state, update: update, crud: crud }; };
   const modals = {
     createTaskModal: modal(...React.useState(), { updateFormData, submit, cancel, onEdit }),
-    settingsModal: modal(...React.useState())
+    settingsModal: modal(...React.useState(false))
   };
 
   return (
