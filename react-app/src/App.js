@@ -184,7 +184,7 @@ const LayoutContainer = styled.div `
 
 function PageLayout(props) {
   const navigate = useNavigate()
-  if(props.user === "-1")
+  if(typeof props.user === 'undefined')
   {
     navigate("/login");
     return;
