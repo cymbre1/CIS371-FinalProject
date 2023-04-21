@@ -131,7 +131,7 @@ export const CreateTaskModal = (props) => {
                             <form>
                             <div>
                                 <label for="name">Task Name: </label>
-                                <input id="name" type="text" onChange={ e => onChange({ name: e.target.value })} value={props.taskData.name ?? ""}></input>
+                                <input id="name" type="text" onChange={ e => onChange({ title: e.target.value })} value={props.taskData.title ?? ""}></input>
                             </div>
                             <div>
                                 <label for="date">Date: </label>

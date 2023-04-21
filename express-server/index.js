@@ -39,11 +39,26 @@ app.get('/getUsers', async (req, res) => {
     setTimeout(async () => res.json(await TaskDB.allUsers()), delay)
 })
 
+app.post('/changeUser/:id', async(req, res) => {
+    const id = req.params.id;
+
+    if (req.body == undefined) {
+        console.log("Failed to parse body")
+        res.status(500) 
+        res.send({ message: 'Post request was unable to parse data' })
+    } else {
+        TaskDB.updateUser(req.body, id).then((data) => {
+            console.log("Sending:  ")
+            console.log(data)
+            res.json(data);
+        })
+    }
+})
+
 app.post('/postTask', async (req, res) => {
     console.log("About to create a new task");
 
     // With JSON data, req.body is the entire parsed JSON object
-    console.log(req.body);
     if (req.body == undefined) {
         console.log("Failed to parse body")
         res.status(500)
@@ -51,11 +66,16 @@ app.post('/postTask', async (req, res) => {
     } else {
         TaskDB.insertTask(req.body).then((data) => {
             console.log("Sending:  ")
-            console.log(data)
             res.json(data);
         })
     }
 })
+
+app.post('/upload', async(req, res) => {
+    console.log("FILES ", req.files);
+
+    res.sendStatus(200);
+});
 
 app.post('/editTask/:id', async (req, res) => {
     const id = req.params.id;
@@ -110,7 +130,6 @@ app.post('/login', async(req, res) => {
 })
 
 app.post('/createUser', async(req, res) => {
-
     if (req.body == undefined) {
         console.log("Failed to parse body")
         res.status(500)

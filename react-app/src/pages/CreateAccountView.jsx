@@ -30,7 +30,7 @@ const CreateAcctButton = styled.button `
 export const CreateAcct = ((props) => {
   const navigate = useNavigate();
 
-  const [login, setLogin] = React.useState({name: "", username: "", password: "", confirmPassword: "", file: null});
+  const [login, setLogin] = React.useState({name: "", email: "", password: "", confirmPassword: "", pfpref: "pfp/defaultUser.png"});
 
   function onLogin(event) {
     event.preventDefault();
@@ -47,18 +47,19 @@ export const CreateAcct = ((props) => {
       referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
       body: JSON.stringify({
         name: login.name,
-        username: login.username,
+        email: login.email,
         password: login.password,
         confirmPassword: login.confirmPassword,
-        pfpref: login.file
+        pfpref: login.pfpref
       }), // body data type must match "Content-Type" header
     })
       .then( response => response.json() )
       .then( data => {
-        if(data === "Success") {
+        if(data !== "Invalid Information") {
+          props.setUser(data.id);
+          props.setUserData({...props.userData, users: [...props.userData.users, data]})
           navigate("/taskView");
         }
-        props.setUserData({...props.userData, users: {...props.userData.users.push(data)}})
       } )
       .catch( err => console.error(err) );
   }
@@ -73,8 +74,8 @@ export const CreateAcct = ((props) => {
           </div>
           <div>
             <label>
-                <p>Username</p>
-                <input type="text" onChange={e => setLogin({...login, username: e.target.value})}/>
+                <p>email</p>
+                <input type="text" onChange={e => setLogin({...login, email: e.target.value})}/>
             </label>
           </div>
           <div>
@@ -88,10 +89,6 @@ export const CreateAcct = ((props) => {
                 <p>Confirm Password</p>
                 <input type="password" onChange={e => setLogin({...login, confirmPassword: e.target.value})}/>
             </label>
-          </div>
-          <div>
-            <p>Profile Photo</p>
-            <input type="file" onChange={e => setLogin({...login, file: e.target.value})}></input>
           </div>
           <div>
             <CreateAcctButton type="submit" onClick={(e) => onLogin(e)}>Submit</CreateAcctButton>
