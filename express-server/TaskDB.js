@@ -104,7 +104,7 @@ class TaskDB {
 
     static updateUser(user, id) {
         return new Promise((resolve, reject) => {
-            const sql = `UPDATE Users SET title="${user.title}", email="${user.email}", password="${user.password}" where id="${id}"`
+            const sql = `UPDATE Users SET name="${user.name}", email="${user.email}", password="${user.password}" where id="${id}"`
             this.db.run(sql, function(err, data) {
                 console.log(err);
                 resolve(user)
