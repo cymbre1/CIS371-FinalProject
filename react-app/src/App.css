@@ -279,7 +279,10 @@
     justify-content: space-between;
     padding: 5px calc(1em + 5px) 0px calc(1em + 5px);
 }
-.tasks #top-bar .title {
+.fc-header-toolbar {
+    padding: 5px 1em 0px 1em;
+}
+.tasks #top-bar .title, .fc .fc-toolbar-title {
     font-size: 2.25em;
 }
 .tasks #top-bar .add-task-button {

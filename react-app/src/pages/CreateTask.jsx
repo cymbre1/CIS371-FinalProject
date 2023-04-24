@@ -49,8 +49,14 @@ div > label {
     flex: 3;
     align-text: left;
 }
-div > input {
+div > input, div > select {
     flex: 5;
+    overflow: hidden; 
+    white-space: nowrap; 
+    text-overflow: ellipsis;
+}
+div > #duration, div > #duration-multiplier {
+    flex: 2.5;
 }
 button {
     flex: 1;

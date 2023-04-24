@@ -53,6 +53,9 @@ div > label {
 }
 div > input {
     flex: 5;
+    overflow: hidden; 
+    white-space: nowrap; 
+    text-overflow: ellipsis;
 }
 button {
     flex: 1;
