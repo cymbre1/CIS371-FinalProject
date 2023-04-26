@@ -156,15 +156,15 @@ export const SettingsModal = ({ showModal, setShowModal, userData, setUserData, 
                                 <h1>Update Profile</h1>
                                 <div>
                                     <label for="name">Full Name: </label>
-                                    <input id="taskname" type="text" onChange={e => setSettings({...settings, name: e.target.value})} value={settings.name}></input>
+                                    <input id="name" type="text" onChange={e => setSettings({...settings, name: e.target.value})} value={settings.name}></input>
                                 </div>
                                 <div>
                                     <label for="email">Email: </label>
                                     <input id="email" type="text" onChange={e => setSettings({...settings, email: e.target.value})} value={settings.email}></input>
                                 </div>
                                 <div>
-                                    <label for="pfp">Password: </label>
-                                    <input id="pfp" type="password" onChange={e => setSettings({...settings, password: e.target.value})} value={settings.password}></input>
+                                    <label for="password">Password: </label>
+                                    <input id="password" type="password" onChange={e => setSettings({...settings, password: e.target.value})} value={settings.password}></input>
                                 </div>
                                 <div>
                                     <button  id="cancel" onClick={ () => setShowModal(false) }>Cancel</button>
