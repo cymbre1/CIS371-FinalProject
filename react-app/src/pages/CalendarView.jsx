@@ -4,7 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction';
 import { useState } from "react";
 
-const apiUrl = 'http://localhost:3002'
+const apiUrl = 'http://ec2-3-17-192-117.us-east-2.compute.amazonaws.com'
 
 /* Base */
 function Base(props) {

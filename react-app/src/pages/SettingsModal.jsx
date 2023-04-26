@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
 import {useNavigate} from 'react-router-dom';
 
-const apiUrl = 'http://localhost:3002'
+const apiUrl = 'http://ec2-3-17-192-117.us-east-2.compute.amazonaws.com'
 
 /* Dim behind modal. */
 const Background = styled.div`

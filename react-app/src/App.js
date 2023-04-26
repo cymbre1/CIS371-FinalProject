@@ -11,7 +11,7 @@ import React from 'react';
 import { CreateTaskModal } from './pages/CreateTask';
 import { SettingsModal } from './pages/SettingsModal';
 
-const apiUrl = 'http://localhost:3002'
+const apiUrl = 'http://ec2-3-17-192-117.us-east-2.compute.amazonaws.com'
 
 function App() {
   const [userData, setUserData] = React.useState({
