@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {useNavigate} from 'react-router-dom';
 
-const apiUrl = 'http://localhost:3002'
+const apiUrl = 'http://ec2-3-17-192-117.us-east-2.compute.amazonaws.com'
 
 const CreateAcctForm = styled.form `
     background: var(--color-OldLavendar);

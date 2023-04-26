@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {useNavigate} from 'react-router-dom';
 
-const apiUrl = 'http://localhost:3002'
+const apiUrl = 'http://ec2-3-17-192-117.us-east-2.compute.amazonaws.com'
 
 const LoginForm = styled.form `
     background: var(--color-OldLavendar);
@@ -52,7 +52,7 @@ export const Login = ((props) => {
       })
         .then( response => response.json() )
         .then( data => {
-          if(data != undefined) {
+          if(data !== undefined) {
             console.log("loginView data: ", data);
             props.setUser(data);
             navigate("/taskView");

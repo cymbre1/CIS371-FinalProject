@@ -3,7 +3,7 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import styled from 'styled-components';
-import { MdClose, MdFaceRetouchingNatural } from 'react-icons/md';
+import { MdClose } from 'react-icons/md';
 
 /* Dim behind modal. */
 const Background = styled.div`
