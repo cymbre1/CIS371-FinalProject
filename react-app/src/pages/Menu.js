@@ -46,14 +46,6 @@ function MenuButton(props) {
     )
 }
 
-function MenuSettingsButton(props) {
-    return (
-    <button id='menu-settings-button' className='menu-button' onClick={ props.click } >
-        { props.text }
-    </button>
-    )
-}
-
 export {
     Menu
 }

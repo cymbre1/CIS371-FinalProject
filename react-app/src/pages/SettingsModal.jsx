@@ -3,7 +3,6 @@ import React, { useRef, useEffect, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
-import {useNavigate} from 'react-router-dom';
 
 const apiUrl = 'http://ec2-3-17-192-117.us-east-2.compute.amazonaws.com'
 
@@ -79,8 +78,6 @@ z-index: 10;
 `;
 
 export const SettingsModal = ({ showModal, setShowModal, userData, setUserData, user, setUser  }) => {
-    const navigate = useNavigate();
-
     const modalRef = useRef();
     const defaultUser = userData.users[user - 1];
     const [settings, setSettings] = React.useState(defaultUser);
