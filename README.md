@@ -1,5 +1,10 @@
 # CIS371-FinalProject
 
+# Info
+This project is hosted in a AWS EC2 Instance and deployed with github pages. Because it is deployed on github pages, it is not possible to navigate to any page other than / yourself and you have to be directed by the app.
+
+You can view this project at [http://cymbre.com/CIS371-FinalProject/](http://cymbre.com/CIS371-FinalProject/).
+
 ## Project Description
 This project is a home chore scheduling app that will schedule chores that need to be done however often in order to distribute household workload.
 
