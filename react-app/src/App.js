@@ -160,7 +160,7 @@ function App() {
   };
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/CIS371-FinalProject">
     <Routes>
       <Route path="/login" element={<Login setUser={ setUser }></Login>}></Route>
       <Route path='/createAccount' element={<CreateAcct setUserData={setUserData} userData={userData} setUser={setUser} ></CreateAcct>}></Route>
